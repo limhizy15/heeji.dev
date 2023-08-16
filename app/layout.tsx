@@ -1,5 +1,7 @@
+import Nav from "@/components/Nav";
 import "./globals.css";
 import type { Metadata } from "next";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "BLOG | heeji.dev",
@@ -13,7 +15,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko">
-      <body>{children}</body>
+      <body>
+        <header>
+          <Nav />
+        </header>
+
+        <main>{children}</main>
+      </body>
     </html>
   );
 }
