@@ -8,16 +8,26 @@ const navlinks: { title: string; link: string }[] = [
 
 export default function Nav() {
   return (
-    <nav>
-      <div>
-        <Image src={"/avatar.jpg"} alt="logo-image" width={40} height={40} />
+    <nav className="navbar flex p-8">
+      <div className="flex-1">
+        {navlinks.map((nav) => (
+          <Link key={nav.title} href={nav.link}>
+            <span className="btn btn-ghost normal-case text-lg">
+              {nav.title}
+            </span>
+          </Link>
+        ))}
       </div>
 
-      {navlinks.map((nav) => (
-        <Link key={nav.title} href={nav.link}>
-          <span>{nav.title}</span>
-        </Link>
-      ))}
+      <div>
+        <Image
+          className="rounded-full"
+          src={"/avatar.jpg"}
+          alt="logo-image"
+          width={40}
+          height={40}
+        />
+      </div>
     </nav>
   );
 }
