@@ -19,7 +19,7 @@ export default makeSource({
   contentDirPath: "posts",
   documentTypes: [Post],
   mdx: {
-    remarkPlugins: [remarkGfm, require("remark-prism")],
+    remarkPlugins: [remarkGfm],
     rehypePlugins: [highlight],
   },
 });

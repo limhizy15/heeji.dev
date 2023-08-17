@@ -1,11 +1,3 @@
-var __require = /* @__PURE__ */ ((x) => typeof require !== "undefined" ? require : typeof Proxy !== "undefined" ? new Proxy(x, {
-  get: (a, b) => (typeof require !== "undefined" ? require : a)[b]
-}) : x)(function(x) {
-  if (typeof require !== "undefined")
-    return require.apply(this, arguments);
-  throw Error('Dynamic require of "' + x + '" is not supported');
-});
-
 // contentlayer.config.ts
 import { defineDocumentType, makeSource } from "contentlayer/source-files";
 import highlight from "rehype-highlight";
@@ -26,7 +18,7 @@ var contentlayer_config_default = makeSource({
   contentDirPath: "posts",
   documentTypes: [Post],
   mdx: {
-    remarkPlugins: [remarkGfm, __require("remark-prism")],
+    remarkPlugins: [remarkGfm],
     rehypePlugins: [highlight]
   }
 });
@@ -34,4 +26,4 @@ export {
   Post,
   contentlayer_config_default as default
 };
-//# sourceMappingURL=compiled-contentlayer-config-3546N4NZ.mjs.map
+//# sourceMappingURL=compiled-contentlayer-config-XBIVCWRY.mjs.map
