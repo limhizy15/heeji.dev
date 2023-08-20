@@ -8,7 +8,7 @@ import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
 const mdxComponents: MDXComponents = {
   h2: (props) => (
     <h2
-      className="text-xl md:text-2xl mt-12 font-bold text-blue-500"
+      className="text-xl md:text-2xl mt-12 font-bold text-primary"
       {...props}
     ></h2>
   ),
@@ -34,7 +34,7 @@ const mdxComponents: MDXComponents = {
       </SyntaxHighlighter>
     ) : (
       <code
-        className="stack bg-base-200 text-black p-2 rounded-lg text-sm"
+        className="stack bg-accent-content text-black p-2 rounded-lg text-sm"
         {...props}
         style={{
           //@ts-ignore

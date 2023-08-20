@@ -19,10 +19,10 @@ export default function PostPage() {
         <div key={post._id} className="card w-full md:w-176 lg:pt-8">
           <Link href={`post/${post.title}`}>
             <div className="card-body">
-              <h2 className="card-title text-blue-950 text-2xl md:text-3xl">
+              <h2 className="card-title text-base-content text-2xl md:text-3xl">
                 {post.title}
               </h2>
-              <p className="text-ellipsis overflow-hidden h-12 text-gray-500">
+              <p className="text-ellipsis overflow-hidden h-12 text-neutral-content">
                 {post.description}
               </p>
 

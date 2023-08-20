@@ -29,11 +29,37 @@ const config: Config = {
     themes: [
       {
         light: {
-          primary: "#3182f6",
-          secondary: "#f6d860",
-          accent: "#37cdbe",
-          neutral: "#3d4451",
-          "base-100": "#ffffff",
+          primary: "#0064FF",
+          secondary: "#192fd6",
+
+          accent: "#c4a0ff",
+          "accent-content": "#d1d5db",
+
+          neutral: "#292730",
+          "neutral-content": "#202632",
+
+          "base-100": "#eaeff5",
+
+          info: "#84c1d7",
+          success: "#30dfc7",
+          warning: "#f5c13d",
+          error: "#f82a65",
+        },
+      },
+      {
+        dark: {
+          primary: "#0064FF",
+          secondary: "#6d3a9c",
+
+          accent: "#51a800",
+          "accent-content": "#e5e7eb",
+
+          neutral: "#2e1a05",
+          "base-100": "#black",
+          info: "#2463eb",
+          success: "#16a249",
+          warning: "#db7706",
+          error: "#dc2828",
         },
       },
     ],

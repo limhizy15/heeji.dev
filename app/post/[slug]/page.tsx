@@ -2,7 +2,9 @@ import { allPosts } from "@/.contentlayer/generated";
 import MdxRenderer from "@/components/mdxRenderer";
 
 function getPost(title: string) {
-  const foundPost = allPosts.find((post) => post.title === decodeURI(title));
+  const foundPost = allPosts.find(
+    (post) => post.title === decodeURIComponent(title)
+  );
   return foundPost;
 }
 
@@ -18,7 +20,7 @@ export default function PostDetailPage({
     <section className="flex flex-col items-center lg:pt-8">
       <div className="card w-full md:w-176">
         <div className="card-body">
-          <h1 className="card-title text-3xl md:text-4xl font-semibold text-gray-800">
+          <h1 className="card-title text-3xl md:text-4xl font-semibold text-neutral-content">
             {data?.title}
           </h1>
           <p className="text-gray-500 ">{data?.date}</p>
