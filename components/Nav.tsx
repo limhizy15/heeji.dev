@@ -8,11 +8,11 @@ const navlinks: { title: string; link: string }[] = [
 
 export default function Nav() {
   return (
-    <nav className="navbar flex p-8">
-      <div className="flex-1">
+    <nav className="navbar flex md:px-52 border-b-1">
+      <div className="flex-1 gap-1">
         {navlinks.map((nav) => (
           <Link key={nav.title} href={nav.link}>
-            <span className="btn btn-ghost normal-case text-lg">
+            <span className="btn normal-case text-lg bg-base-100 border-none">
               {nav.title}
             </span>
           </Link>

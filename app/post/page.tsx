@@ -16,16 +16,19 @@ export default function PostPage() {
   return (
     <section className="flex flex-col flex-1 items-center gap-4">
       {posts.map((post) => (
-        <div key={post._id} className="card w-11/12 bg-neutral shadow-xl">
+        <div key={post._id} className="card w-full md:w-176 lg:pt-8">
           <Link href={`post/${post.title}`}>
             <div className="card-body">
-              <h2 className="card-title">{post.title}</h2>
-              <p className="text-ellipsis overflow-hidden h-12">
+              <h2 className="card-title text-blue-950 text-2xl md:text-3xl">
+                {post.title}
+              </h2>
+              <p className="text-ellipsis overflow-hidden h-12 text-gray-500">
                 {post.description}
               </p>
+
               <div className="card-actions justify-start">
                 {post.tags.map((tag) => (
-                  <div key={tag} className="badge badge-outline">
+                  <div key={tag} className="badge badge-outline badge-primary">
                     {tag}
                   </div>
                 ))}

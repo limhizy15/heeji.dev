@@ -1,7 +1,6 @@
 import Nav from "@/components/Nav";
 import "./globals.css";
 import type { Metadata } from "next";
-import Head from "next/head";
 import "@/styles/highlight-js/a11y-dark.css";
 
 export const metadata: Metadata = {
@@ -16,13 +15,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko">
-      <head>
-        <link
-          rel="stylesheet"
-          href="https://unpkg.com/dracula-prism/dist/css/dracula-prism.css"
-        ></link>
-      </head>
-
       <body className="bg-base-100">
         <header>
           <Nav />

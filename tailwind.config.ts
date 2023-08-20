@@ -19,8 +19,24 @@ const config: Config = {
         "160": "40rem",
         "176": "44rem",
       },
+      borderWidth: {
+        "1": "1px",
+      },
     },
   },
   plugins: [require("daisyui")],
+  daisyui: {
+    themes: [
+      {
+        light: {
+          primary: "#3182f6",
+          secondary: "#f6d860",
+          accent: "#37cdbe",
+          neutral: "#3d4451",
+          "base-100": "#ffffff",
+        },
+      },
+    ],
+  },
 };
 export default config;
