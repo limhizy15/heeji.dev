@@ -28,16 +28,19 @@ tags:
 
 ## Render Tree
 
-{/* ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1318d3ff-1b85-45e2-9c56-ad8cd2dd702b/Untitled.png) */}
+<img
+  src={"https://d2.naver.com/content/images/2015/06/helloworld-59361-3.png"}
+/>
 
 - DOM과 CSSOM을 합친 것이다. 브라우저는 DOM을 루트에서부터 순회하며 어떤 CSS를 붙일지 결정한다. 렌더트리는 보일 수 있는 컨텐츠만 감지한다. 예를 들어 head 섹션 내용은 보이지 않으므로 렌더트리에 들어가지 않는다. `display:none;` 속성도 마찬가지이다.
+- 렌더링 엔진은 더 나은 사용자 경험을 위해 가능하면 빠르게 내용을 표시하는데 모든 HTML을 파싱할 때까지 기다리지 않고 배치와 그리기 과정을 시작한다.
 
 ## Layout
 
 - Layout은 스크린 사이즈에 의존성을 갖고있다. **페이지에 요소들이 어떻게 어디에 위치할지와 크기를 결정**한다.
 - 노드가 많을 수록 레이아웃에 더 오랜 시간이 걸린다. 렌더 트리에 변경점이 생길 때 (노드를 추가하거나 컨텐츠를 바꾸거나 스타일을 변경하거나) 레이아웃이 발생한다.
 
-Paint
+## Paint
 
 - 렌더트리가 생성되고 레이아웃이 발생하면 스크린에 픽셀들이 그려진다.
 
