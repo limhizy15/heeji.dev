@@ -1,5 +1,5 @@
 import { allPosts } from "@/.contentlayer/generated";
-import MdxRenderer from "@/components/mdxRenderer";
+import MdxRenderer from "@/components/NdxRenderer";
 
 function getPost(title: string) {
   const foundPost = allPosts.find(

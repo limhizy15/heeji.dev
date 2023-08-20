@@ -1,6 +1,5 @@
 import { defineDocumentType, makeSource } from "contentlayer/source-files";
-import highlight from "rehype-highlight";
-import remarkGfm from "remark-gfm";
+import { remarkCodeHike } from "@code-hike/mdx";
 
 export const Post = defineDocumentType(() => ({
   name: "Post",
@@ -19,7 +18,6 @@ export default makeSource({
   contentDirPath: "posts",
   documentTypes: [Post],
   mdx: {
-    remarkPlugins: [remarkGfm],
-    rehypePlugins: [highlight],
+    remarkPlugins: [[remarkCodeHike, { theme: "nord", lineNumbers: true }]],
   },
 });

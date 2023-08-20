@@ -19,19 +19,17 @@ const mdxComponents: MDXComponents = {
       {...props}
     ></ul>
   ),
-  // @ts-ignore
-  code: ({ node, inline, className, children, ...props }) => {
+  code: ({ className, children, ...props }) => {
     const match = /language-(\w+)/.exec(className || "");
-    return !inline && match ? (
+
+    return match ? (
       //@ts-ignore
       <SyntaxHighlighter
         language={match[1]}
         PreTag="div"
         {...props}
         style={dark}
-      >
-        {String(children).replace(/\n$/, "")}
-      </SyntaxHighlighter>
+      ></SyntaxHighlighter>
     ) : (
       <code
         className="stack bg-accent-content text-black p-2 rounded-lg text-sm"

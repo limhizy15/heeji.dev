@@ -1,0 +1,117 @@
+---
+title: reflow와 repaint 그리고 가상돔
+date: 2023-08-20
+description: 브라우저에서 reflow와 repaint는 무엇인지, 그리고 어떻게 줄일 수 있는지 알아봅니다. 연관된 개념인 가상돔을 짧게 소개합니다.
+thumbnailURL: http://via.placeholder.com/640x480
+tags:
+  - TIL
+  - 브라우저
+---
+
+## repaint
+
+repaint는 레이아웃에 영향을 끼치지 않는 요소의 변화에 의해 발생하는 것입니다. DOM API를 통해 `visibility`를 변경하는 경우나 `background-color` 등이 변경되는 경우에 발생합니다.
+
+## reflow (layout)
+
+reflow는 **웹 페이지의 레이아웃을 다시 계산하고 요소의 크기와 위치를 다시 결정**하는 것입니다. 이는 웹 페이지의 구조나 스타일이 변경 되었을 때 발생합니다.
+
+<br />
+reflow가 발생하는 동작에는 어떤 것이 있을까요? 다음과 같은 것들이 있습니다.
+
+- 윈도우의 크기가 변할 때
+- 폰트가 변경될 때
+- 컨텐츠가 변경될 때
+- JS에 의해 DOM이 동적으로 변화할 때 (노드 추가, 제거)
+
+<br />
+변화가 발생한 요소가 영향을 미치는 모든 노드 (자식, 부모, 조상)을 다시 계산하고 렌더
+트리도 재생성합니다. 렌더 트리가 재생성되기 때문에 렌더 트리를 다시 그리는 repaint도
+유발됩니다.
+
+## reflow를 줄이는 방법
+
+reflow가 많은 연산과 렌더링을 유발한다는 사실을 알았는데요 그러면 어떻게 reflow를 줄일 수 있을까요?
+
+<br />
+
+**1. 레이아웃을 위한 인라인 스타일을 사용하지 않는다.**
+
+인라인 스타일은 reflow가 시작될 때 레이아웃에 영향을 미칩니다. 코드 가독성과 유지 보수를 위해서도 인라인 스타일은 사용하지 않는 것이 좋겠습니다.
+
+<br />
+
+**2. 복잡한 CSS 선택자를 피한다.**
+
+CSS 선택자는 특정 요소를 스타일링하거나 선택하는데 사용됩니다. 이가 복잡하고 깊게 중첩되어 있다면 요소의 스타일을 결정하기 위해 계산해야할 범위가 커지게 되므로 reflow 과정에 영향을 미칩니다.
+
+<br />
+
+**3. DOM 트리 말단 노드에서 클래스를 변경한다.**
+
+가능한 말단 노드에서 클래스를 변경하면 reflow의 범위가 필요한 작은 단위의 노드로 제한할 수 있습니다. 이렇게 하면 reflow의 영향을 최소화해서 리소스를 줄일 수 있습니다.
+
+<br />
+
+**4. 복잡한 애니메이션을 전체 노드에서 분리한다.**
+
+애니메이션 효과는 프레임 수에 따라 많은 reflow가 발생합니다. 따라서 `position 속성을 ‘fixed’나 ‘absolute’`로 두면 해당 노드는 전체 노드에서 분리가 됩니다. 따라서 영향을 주는 노드가 적어집니다.
+
+<br />
+
+**5. 숨겨진 요소를 변경합니다.**
+
+`display: none;`으로 숨겨진 요소는 변경될 때 repaint나 reflow를 유발하지 않습니다. 따라서 visibility를 변경하여 표시되기 전에 최대한 변경하는 것이 좋습니다.
+
+<br />
+
+**6. 한 번에 DOM 요소를 업데이트 합니다.**
+
+다음 예시는 reflow를 3번 유발합니다.
+
+```javascript
+const elem = document.getElementById("foo");
+elem.width = "100px";
+elem.height = "200px";
+elem.style.margin = "10px";
+```
+
+이것을 한 번의 reflow로 줄일 수 있습니다. 이런 식으로요!
+
+```javascript
+const elem = document.getElementById("foo");
+elem.classList.add("newStyle");
+```
+
+```css
+.newStyle {
+  width: 100px;
+  height: 200px;
+  margin: 10px;
+}
+```
+
+## 가상돔
+
+사실 reflow가 필요할 때마다 발생하지 않으면 이런 걱정을 할 필요가 없지 않을까요?
+
+<br />
+
+기존에는 화면의 변경사항을 DOM을 직접 조작해 브라우저에 반영했습니다. 위에서 알아본 것처럼 이렇게 되면 실시간으로 렌더 트리가 재생성되고 repaint, reflow가 일어나는 문제가 발생합니다. 또 대규모 어플리케이션에서는 상태 관리가 복잡해지고 여러 컴포넌트 간의 상태 동기화 과정에서 불필요한 업데이트와 렌더링이 발생할 수 있습니다.
+
+<br />
+
+이런 이유와 함께 가상돔 (Virtual DOM) 개념이 등장하게 됩니다. **DOM 변경사항을 실제 DOM에 바로 처리하는 것이 아니라 가상돔과 메모리에서 미리 처리하고 저장한 후 실제 DOM과 동기화하는 개념**입니다.
+
+<br />
+
+가상돔을 통해 실제 DOM 변경을 최소화하면서 변경사항을 일괄적으로 적용할 수 있어 reflow, repaint 비용을 줄일 수 있게 되었습니다.
+
+<br />
+
+가상돔 개념을 대표적으로 사용하는 프레임워크는 React인데요 다음 글에서 더 살펴보겠습니다!
+
+## 참고자료
+
+- https://developer.mozilla.org/en-US/docs/Glossary/Reflow
+- https://minjung-jeon.github.io/10-Ways-to-Minimize-Reflows-and-Improve-Performance/

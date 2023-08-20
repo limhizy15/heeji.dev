@@ -3,6 +3,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import "@/styles/highlight-js/a11y-dark.css";
 import { getCurrentTheme } from "@/utils/colorTheme";
+import "@code-hike/mdx/dist/index.css";
 
 export const metadata: Metadata = {
   title: "BLOG | heeji.dev",
