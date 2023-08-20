@@ -2,6 +2,7 @@ import Nav from "@/components/Nav";
 import "./globals.css";
 import type { Metadata } from "next";
 import Head from "next/head";
+import "@/styles/highlight-js/a11y-dark.css";
 
 export const metadata: Metadata = {
   title: "BLOG | heeji.dev",

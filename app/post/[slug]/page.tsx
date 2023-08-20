@@ -1,6 +1,10 @@
+"use client";
+
 import { allPosts } from "@/.contentlayer/generated";
 import { MDXComponents } from "mdx/types";
 import { useMDXComponent } from "next-contentlayer/hooks";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 const mdxComponents: MDXComponents = {
   h2: (props) => <h2 className="text-2xl pt-12 font-bold" {...props}></h2>,
@@ -11,6 +15,30 @@ const mdxComponents: MDXComponents = {
       {...props}
     ></ul>
   ),
+  code: ({ node, inline, className, children, ...props }) => {
+    const match = /language-(\w+)/.exec(className || "");
+    return !inline && match ? (
+      <SyntaxHighlighter
+        language={match[1]}
+        PreTag="div"
+        {...props}
+        style={dark}
+      >
+        {String(children).replace(/\n$/, "")}
+      </SyntaxHighlighter>
+    ) : (
+      <code
+        className="stack bg-base-300 text-black"
+        {...props}
+        style={{
+          border: "1px solid red",
+          textWrap: "wrap",
+        }}
+      >
+        {children}
+      </code>
+    );
+  },
 };
 
 function getPost(title: string) {
