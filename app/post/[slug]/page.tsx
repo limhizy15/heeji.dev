@@ -20,9 +20,11 @@ const mdxComponents: MDXComponents = {
       {...props}
     ></ul>
   ),
+  // @ts-ignore
   code: ({ node, inline, className, children, ...props }) => {
     const match = /language-(\w+)/.exec(className || "");
     return !inline && match ? (
+      //@ts-ignore
       <SyntaxHighlighter
         language={match[1]}
         PreTag="div"
@@ -36,6 +38,7 @@ const mdxComponents: MDXComponents = {
         className="stack bg-base-200 text-black p-2 rounded-lg text-sm"
         {...props}
         style={{
+          //@ts-ignore
           textWrap: "wrap",
         }}
       >
