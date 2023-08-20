@@ -25,6 +25,9 @@ export default function PostPage() {
               <p className="text-ellipsis overflow-hidden h-12 text-neutral-content">
                 {post.description}
               </p>
+              <span className="text-ellipsis overflow-hidden h-12 text-gray-500">
+                {post.date}
+              </span>
 
               <div className="card-actions justify-start">
                 {post.tags.map((tag) => (
