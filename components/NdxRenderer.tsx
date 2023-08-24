@@ -7,10 +7,7 @@ import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 const mdxComponents: MDXComponents = {
   h2: (props) => (
-    <h2
-      className="text-xl md:text-2xl mt-12 font-bold text-primary"
-      {...props}
-    ></h2>
+    <h2 className="text-xl md:text-2xl mt-12 font-bold" {...props}></h2>
   ),
   h3: (props) => <h3 className="text-xl pt-8 font-bold" {...props}></h3>,
   ul: (props) => (
@@ -32,7 +29,7 @@ const mdxComponents: MDXComponents = {
       ></SyntaxHighlighter>
     ) : (
       <code
-        className="stack bg-accent-content text-black p-2 rounded-lg text-sm"
+        className="stack bg-gray-100 p-1 rounded-lg text-sm text-primary"
         {...props}
         style={{
           //@ts-ignore
@@ -43,6 +40,7 @@ const mdxComponents: MDXComponents = {
       </code>
     );
   },
+  p: (props) => <p className="mb-3" {...props}></p>,
 };
 
 export default function MdxRenderer({ data }: { data: any }) {

@@ -19,10 +19,12 @@ export default function PostDetailPage({
   return (
     <section className="flex flex-col items-center lg:pt-8">
       <div className="card w-full md:w-176">
-        <div className="card-body">
-          <h1 className="card-title text-3xl md:text-4xl font-semibold text-neutral-content">
-            {data?.title}
+        <div className="card-body ">
+          <h1 className="relative card-title text-3xl md:text-4xl font-semibold text-neutral-content">
+            <p className="z-30">{data?.title}</p>
+            <p className="absolute bg-blue-500 w-full h-2 bottom-0"></p>
           </h1>
+
           <p className="text-gray-500 ">{data?.date}</p>
 
           <MdxRenderer data={data} />
