@@ -17,7 +17,7 @@ export default function PostPage() {
     <section className="flex flex-col flex-1 items-center gap-4">
       {posts.map((post) => (
         <div key={post._id} className="card w-full md:w-176 lg:pt-8">
-          <Link href={`post/${post.title}`}>
+          <Link href={`post/${encodeURIComponent(post.title)}`}>
             <div className="card-body">
               <h2 className="card-title text-base-content text-2xl md:text-3xl">
                 {post.title}
