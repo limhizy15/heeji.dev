@@ -1,0 +1,62 @@
+---
+title: 이벤트 루프란?
+date: 2023-08-30
+description: 이벤트 루프를 정복해보아요
+thumbnailURL: http://via.placeholder.com/640x480
+tags:
+  - TIL
+  - 자바스크립트
+  - 비동기
+---
+
+자바스크립트는 싱글 스레드 언어이기 때문에 한 번에 하나의 작업만 수행할 수 있습니다. 그럼에도 동시에 여러 작업이 실행되는 것처럼 보이는 것은 비동기 방식을 사용하고 있기 때문입니다. 이런 비동기 처리는 이벤트 루프로 이루어집니다.
+
+```
+동시성? 동시성은 여러 작업이 겹쳐서 실행되는 것처럼 보이게 만드는 방식입니다. 병렬성은 실제로 여러 작업이 동시에 실행되는 것을 의미합니다. 자바스크립트 이벤트 루프는 동시성 방식입니다.
+```
+
+## 이벤트 루프
+
+이벤트 루프는 `Call Stack`, `Macro Task Queue (Task Queue)`, `Micro Task Queue`, `render queue`로 이루어져 있습니다.
+
+### Call Stack
+
+- 함수가 실행되어 실행 컨텍스트가 생성되고 콜스택에 쌓입니다.
+
+### Macro Task Queue (Task Queue)
+
+- web API가 작업 후 실행할 콜백 함수를 넣는 곳입니다. setTimeout, setInterval, I/O 작업, UI 렌더링 등이 포함됩니다.
+
+### Micro Task Queue
+
+- Promise 콜백과 MutationObserver 콜백이 들어가는 큐입니다. 콜스택이 비워지자마자 큐에 있는 micro task를 콜스택에 푸시합니다.
+- micro task queue에 있는 작업을 처리하기 시작하면 큐가 빌 때까지 계속 처리합니다. 우선순위가 가장 높기 때문에 연속된 micro task는 UI를 블로킹하여 유저가 아무 인터랙션도 하지 못하게 할 수 있습니다.
+
+여기까지 그림으로 나타내면 이런 형태가 됩니다.
+
+<img
+  width="769"
+  alt="Pasted image 20230829181536"
+  src="https://github.com/limhizy15/heeji.dev/assets/41099712/314d62d9-6f84-48b9-84d3-62c6c1141275"
+/>
+
+- 어떤 함수가 실행되면 콜스택에 쌓입니다. 만약 비동기 처리가 필요한 작업이라면 web API에 넘깁니다. web API는 필요한 처리를 한 후 콜백 함수를 task queue에 넣습니다. promise의 콜백은 micro task queue에 들어갑니다.
+- 이벤트 루프는 콜스택이 비었을 때 queue에 작업이 있는지 보고 우선순위가 높은 micro task queue에서 먼저 꺼냅니다. micro task queue는 queue가 빌 때까지 작업을 pop하여 수행합니다. 콜스택과 task queue가 비었으면 task queue의 작업들을 수행합니다.
+
+그런데 여기서 큐의 종류가 하나 더 있습니다. 바로 render queue입니다.
+
+### Render Queue
+
+- 브라우저는 화면을 60fps로 유지하고 있습니다. 이 말은 1초당 60프레임을 노출한다는 뜻이고 약 16ms 당 1 프레임이 변화해야한다는 뜻입니다.
+- 자바스크립트에서 UI를 변경하는 코드가 있다면 이것을 바로 수행하는 것이 아니라 큐에 담아뒀다가 한 번에 업데이트를 합니다. 매번 업데이트를 하면 reflow, repaint가 유발되고 브라우저가 힘들어하겠죠.
+- 이벤트 루프는 화면을 업데이트할 때가 되면 렌더큐를 한 번 보고 할 작업이 있다면 수행합니다.
+
+## 참고 자료
+
+- https://blog.xnim.me/event-loop-and-render-queue ❗️
+- https://frarizzi.science/journal/web-engineering/browser-rendering-queue-in-depth
+- https://html.spec.whatwg.org/multipage/webappapis.html#event-loops
+- https://dev.to/lydiahallie/javascript-visualized-event-loop-3dif
+- https://developer.mozilla.org/en-US/docs/Web/API/HTML_DOM_API/Microtask_guide/In_depth
+- https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/
+- https://pozafly.github.io/javascript/event-loop-and-async/
