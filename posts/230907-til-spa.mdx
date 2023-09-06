@@ -1,0 +1,64 @@
+---
+title: SPA란?
+date: 2023-09-07
+description: SPA는 무엇이고 왜 나왔나
+thumbnailURL: http://via.placeholder.com/640x480
+tags:
+  - TIL
+---
+
+SPA는 하나의 페이지를 사용하는 어플리케이션이다. 이 방식을 사용하는 것은 react, vue 등이 있습니다. 그럼 SPA가 무엇인지, 장점과 단점엔 무엇이 있는지 알아보겠습니다.
+
+## Single Page Application (SPA)란?
+
+### SPA와 MPA (Multi Page Application) 비교
+
+SPA를 이해하기 위해서는 먼저 전통 방식인 MPA에 대해 알아볼 필요가 있습니다.
+
+<img
+  src={
+    "https://github-production-user-asset-6210df.s3.amazonaws.com/41099712/266053806-102d8192-8648-4004-9d6c-1d6021e8d806.png"
+  }
+/>
+MPA에서는 각 페이지마다 별도의 HTML이 존재합니다. 사용자가 페이지를 이동할 때마다
+새로운 HTML을 서버로부터 요청하고 브라우저가 이를 파싱합니다.
+
+- 장점: 페이지에 필요한 리소스들만 모아 관리하고 로드할 수 있어 효율적인 리소스 관리가 가능합니다.
+- 단점: 느린 네트워크 환경에서는 사용자 경험이 떨어질 수 있습니다.
+
+### SPA의 작동 원리
+
+<img
+  src={
+    "https://github-production-user-asset-6210df.s3.amazonaws.com/41099712/266055870-3b50ee2c-4341-4ba9-b904-47b010019c18.png"
+  }
+/>
+SPA는 전통 방식보다 더 나은 사용자 경험을 제공하기 위해 등장했습니다.
+
+SPA는 자바스크립트를 사용하여 동적으로 HTML을 생성하고 조작해 페이지 이동을 흉내냅니다. 매번 새로운 HTML을 서버에 요청하지 않아도 되어 더 좋은 사용자 경험을 제공할 수 있게 되었습니다.
+
+## SPA의 문제점
+
+- **파일 크기**: 하나의 페이지이므로 어플리케이션에 필요한 모든 것을 하나의 자바스크립트 파일에서 정의합니다. 서비스가 복잡해질수록 이 파일의 크기가 커져 초기 로딩 시간이 늘어날 수 있습니다.
+- **SEO 문제**: SPA는 동적으로 페이지 내용을 변경하기 때문에 검색 엔진 최적화가 어려울 수 있습니다.
+
+React로 만들어진 페이지의 HTML을 요청하면 아래와 같이 body가 거의 빈 상태로 옵니다. 검색 엔진, 크롤러 들이 데이터를 얻어가기 어려운 구조입니다.
+
+```html
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <title>타이틀!</title>
+    중략..
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
+```
+
+## 문제 해결 방안
+
+파일 크기가 큰 문제는 코드 스플리팅 (Code Splitting)으로 해결할 수 있습니다. 자바스크립트 파일을 쪼개서 필요한 부분만 로드할 수 있도록 해줍니다.
+
+SEO 문제는 Server Side Rendering (SSR)이나 프리렌더링을 통해 해결할 수 있습니다.
