@@ -4,8 +4,9 @@ import ThemeToggleButton from "./ThemeToggleButton";
 import { CookieValueTypes } from "cookies-next";
 
 const navlinks: { title: string; link: string }[] = [
-  { title: "Home", link: "/" },
+  // { title: "Home", link: "/" },
   { title: "Post", link: "/post" },
+  { title: "About", link: "/about" },
 ];
 
 export default function Nav({ theme }: { theme: CookieValueTypes }) {
