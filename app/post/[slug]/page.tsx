@@ -17,8 +17,8 @@ export default function PostDetailPage({
 
   // TODO: 컴포넌트화
   return (
-    <section className="flex flex-col items-center lg:pt-8">
-      <div className="card w-full md:w-176">
+    <section className="flex flex-col items-center lg:pt-8 md:w-176">
+      <div className="card w-full">
         <div className="card-body ">
           <h1 className="relative card-title text-3xl md:text-4xl font-semibold text-neutral-content">
             <p className="z-30">{data?.title}</p>

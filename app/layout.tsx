@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import "@/styles/highlight-js/a11y-dark.css";
 import { getCurrentTheme } from "@/utils/colorTheme";
 import "@code-hike/mdx/dist/index.css";
+import { Providers } from "./providers";
 
 export const metadata: Metadata = {
   title: "BLOG | heeji.dev",
@@ -24,7 +25,11 @@ export default async function RootLayout({
           <Nav theme={theme} />
         </header>
 
-        <main>{children}</main>
+        <Providers>
+          <main className="flex align-middle justify-center items-center">
+            {children}
+          </main>
+        </Providers>
       </body>
     </html>
   );

@@ -1,4 +1,5 @@
 import { allPosts } from "@/.contentlayer/generated";
+import TagList from "@/components/TagList";
 import Link from "next/link";
 
 function getPosts() {
@@ -12,34 +13,44 @@ function getPosts() {
 export default function PostPage() {
   const posts = getPosts();
 
+  const tags = posts.flatMap((post) => post.tags);
+  const uniqTags = Array.from(new Set(tags));
+
   // TODO: 컴포넌트로 분리
   return (
-    <section className="flex flex-col flex-1 items-center gap-4">
-      {posts.map((post) => (
-        <div key={post._id} className="card w-full md:w-176 lg:pt-8">
-          <Link href={`post/${encodeURIComponent(post.title)}`}>
-            <div className="card-body">
-              <h2 className="card-title text-base-content text-2xl md:text-3xl">
-                {post.title}
-              </h2>
-              <p className="text-ellipsis overflow-hidden h-12 text-neutral-content">
-                {post.description}
-              </p>
-              <span className="text-ellipsis overflow-hidden h-12 text-gray-500">
-                {post.date}
-              </span>
+    <section className="flex flex-col flex-1 items-center justify-center align-middle md:w-176">
+      <TagList tags={uniqTags} />
 
-              <div className="card-actions justify-start">
-                {post.tags.map((tag) => (
-                  <div key={tag} className="badge badge-outline badge-primary">
-                    {tag}
-                  </div>
-                ))}
+      <div className="gap-4">
+        {posts.map((post) => (
+          <div key={post._id} className="card w-full md:w-176">
+            <Link href={`post/${encodeURIComponent(post.title)}`}>
+              <div className="card-body">
+                <h2 className="card-title text-base-content text-2xl md:text-3xl">
+                  {post.title}
+                </h2>
+                <p className="text-ellipsis overflow-hidden h-12 text-neutral-content">
+                  {post.description}
+                </p>
+                <span className="text-ellipsis overflow-hidden h-12 text-gray-500">
+                  {post.date}
+                </span>
+
+                <div className="card-actions justify-start">
+                  {post.tags.map((tag) => (
+                    <div
+                      key={tag}
+                      className="badge badge-outline badge-primary"
+                    >
+                      {tag}
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
-          </Link>
-        </div>
-      ))}
+            </Link>
+          </div>
+        ))}
+      </div>
     </section>
   );
 }
