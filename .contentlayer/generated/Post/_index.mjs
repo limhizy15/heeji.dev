@@ -9,5 +9,6 @@ import _230820TilReflowAndRepaintMdx from './_230820-til-reflow-and-repaint.mdx.
 import _230824TilAsynchronousMdx from './_230824-til-asynchronous.mdx.json' assert { type: 'json' }
 import _230830TilEventLoopMdx from './_230830-til-event-loop.mdx.json' assert { type: 'json' }
 import _230907TilSpaMdx from './_230907-til-spa.mdx.json' assert { type: 'json' }
+import _230913TilFirstClassObjectMdx from './_230913-til-first-class-object.mdx.json' assert { type: 'json' }
 
-export const allPosts = [_211017ProjectOttichuMdx, _211122RetrospectivesNovember_2021Mdx, _220517TilReactHookMdx, _230815TilCriticalRenderingPathMdx, _230817TilBrowserUrlMdx, _230820TilReflowAndRepaintMdx, _230824TilAsynchronousMdx, _230830TilEventLoopMdx, _230907TilSpaMdx]
+export const allPosts = [_211017ProjectOttichuMdx, _211122RetrospectivesNovember_2021Mdx, _220517TilReactHookMdx, _230815TilCriticalRenderingPathMdx, _230817TilBrowserUrlMdx, _230820TilReflowAndRepaintMdx, _230824TilAsynchronousMdx, _230830TilEventLoopMdx, _230907TilSpaMdx, _230913TilFirstClassObjectMdx]
