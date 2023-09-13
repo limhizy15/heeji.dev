@@ -22,7 +22,6 @@ export default function PostDetailPage({
         <div className="card-body ">
           <h1 className="relative card-title text-3xl md:text-4xl font-semibold text-neutral-content">
             <p className="z-30">{data?.title}</p>
-            <p className="absolute bg-blue-500 w-full h-2 bottom-0"></p>
           </h1>
 
           <p className="text-gray-500 ">{data?.date}</p>

@@ -18,6 +18,8 @@ export default makeSource({
   contentDirPath: "posts",
   documentTypes: [Post],
   mdx: {
-    remarkPlugins: [[remarkCodeHike, { theme: "nord", lineNumbers: true }]],
+    remarkPlugins: [
+      [remarkCodeHike, { theme: "material-darker", lineNumbers: true }],
+    ],
   },
 });

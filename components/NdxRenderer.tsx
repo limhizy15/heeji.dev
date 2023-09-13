@@ -6,15 +6,22 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 const mdxComponents: MDXComponents = {
+  a: (props) => <a className="underline" {...props}></a>,
   h2: (props) => (
     <h2 className="text-xl md:text-2xl mt-12 font-bold" {...props}></h2>
   ),
   h3: (props) => <h3 className="text-xl pt-8 font-bold" {...props}></h3>,
   ul: (props) => (
     <ul
-      className="marker:text-blue-500 list-disc pl-5 space-y-3"
+      className="marker:text-blue-500 list-disc pl-5 space-y-1"
       {...props}
     ></ul>
+  ),
+  ol: (props) => (
+    <ol
+      className="marker:text-blue-500 list-decimal pl-5 space-y-1"
+      {...props}
+    ></ol>
   ),
   code: ({ className, children, ...props }) => {
     const match = /language-(\w+)/.exec(className || "");
@@ -40,7 +47,10 @@ const mdxComponents: MDXComponents = {
       </code>
     );
   },
-  p: (props) => <p className="mb-3" {...props}></p>,
+  p: (props) => <p {...props}></p>,
+  blockquote: (props) => (
+    <blockquote {...props} className=" bg-slate-100 p-2"></blockquote>
+  ),
 };
 
 export default function MdxRenderer({ data }: { data: any }) {
