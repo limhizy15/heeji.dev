@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import ThemeToggleButton from "./ThemeToggleButton";
 import { CookieValueTypes } from "cookies-next";
+import { Button } from "@chakra-ui/react";
 
 const navlinks: { title: string; link: string }[] = [
   // { title: "Home", link: "/" },
@@ -14,11 +15,9 @@ export default function Nav({ theme }: { theme: CookieValueTypes }) {
     <nav className="navbar flex md:px-32 lg:px-52 border-b-1">
       <section className="flex-1 gap-1">
         {navlinks.map((nav) => (
-          <Link key={nav.title} href={nav.link}>
-            <span className="btn btn-ghost normal-case text-lg border-none">
-              {nav.title}
-            </span>
-          </Link>
+          <Button key={nav.link}>
+            <Link href={nav.link}>{nav.title}</Link>
+          </Button>
         ))}
       </section>
 

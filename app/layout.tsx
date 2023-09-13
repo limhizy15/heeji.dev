@@ -1,4 +1,4 @@
-import Nav from "@/components/Nav";
+import Nav from "@/app/_components/Nav";
 import "./globals.css";
 import type { Metadata } from "next";
 import "@/styles/highlight-js/a11y-dark.css";
@@ -20,12 +20,12 @@ export default async function RootLayout({
 
   return (
     <html lang="ko" data-theme={theme}>
-      <body className="bg-base-100">
-        <header>
-          <Nav theme={theme} />
-        </header>
-
+      <body>
         <Providers>
+          <header>
+            <Nav theme={theme} />
+          </header>
+
           <main className="flex align-middle justify-center items-center">
             {children}
           </main>

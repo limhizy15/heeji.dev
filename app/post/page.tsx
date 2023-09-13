@@ -1,5 +1,13 @@
 import { allPosts } from "@/.contentlayer/generated";
-import TagList from "@/components/TagList";
+import TagList from "@/app/_components/TagList";
+import {
+  Card,
+  Heading,
+  ListItem,
+  UnorderedList,
+  Text,
+  Tag,
+} from "@chakra-ui/react";
 import Link from "next/link";
 
 function getPosts() {
@@ -18,39 +26,37 @@ export default function PostPage() {
 
   // TODO: 컴포넌트로 분리
   return (
-    <section className="flex flex-col flex-1 items-center justify-center align-middle md:w-176">
+    <section className="flex flex-col flex-1 items-center justify-center align-middle md:w-176 pb-10">
       <TagList tags={uniqTags} />
 
-      <div className="gap-4">
+      <UnorderedList spacing={4}>
         {posts.map((post) => (
-          <div key={post._id} className="card w-full md:w-176">
+          <ListItem key={post._id} className="card w-full md:w-176">
             <Link href={`post/${encodeURIComponent(post.title)}`}>
-              <div className="card-body">
-                <h2 className="card-title text-base-content text-2xl md:text-3xl">
+              <Card size={"lg"} variant={"outline"} p={4}>
+                <Heading as={"h2"} size={"md"}>
                   {post.title}
-                </h2>
-                <p className="text-ellipsis overflow-hidden h-12 text-neutral-content">
+                </Heading>
+
+                <Text maxH={12} overflow={"hidden"} textOverflow={"ellipsis"}>
                   {post.description}
-                </p>
+                </Text>
                 <span className="text-ellipsis overflow-hidden h-12 text-gray-500">
                   {post.date}
                 </span>
 
                 <div className="card-actions justify-start">
                   {post.tags.map((tag) => (
-                    <div
-                      key={tag}
-                      className="badge badge-outline badge-primary"
-                    >
+                    <Tag key={tag} variant={"outline"} colorScheme={"blue"}>
                       {tag}
-                    </div>
+                    </Tag>
                   ))}
                 </div>
-              </div>
+              </Card>
             </Link>
-          </div>
+          </ListItem>
         ))}
-      </div>
+      </UnorderedList>
     </section>
   );
 }
