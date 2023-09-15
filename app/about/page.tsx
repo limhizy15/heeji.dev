@@ -16,7 +16,7 @@ import Image from "next/image";
 
 export default function AboutPage() {
   return (
-    <Container paddingBlock={4} maxW={"container.sm"}>
+    <Container paddingBlock={4} maxW={"container.md"}>
       <Heading
         whiteSpace={"pre-line"}
       >{`반갑습니다.\n프론트엔드 개발자 임희지입니다.`}</Heading>
