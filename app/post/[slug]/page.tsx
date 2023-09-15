@@ -1,5 +1,6 @@
 import { allPosts } from "@/.contentlayer/generated";
 import MdxRenderer from "@/app/_components/NdxRenderer";
+import { Container, Heading, Text } from "@chakra-ui/react";
 
 function getPost(title: string) {
   const foundPost = allPosts.find(
@@ -17,18 +18,12 @@ export default function PostDetailPage({
 
   // TODO: 컴포넌트화
   return (
-    <section className="flex flex-col items-center lg:pt-8 md:w-176">
-      <div className="card w-full">
-        <div className="card-body ">
-          <h1 className="relative card-title text-3xl md:text-4xl font-semibold text-neutral-content">
-            <p className="z-30">{data?.title}</p>
-          </h1>
+    <Container maxW={"container.md"} paddingBlock={8}>
+      <Heading>{data?.title}</Heading>
 
-          <p className="text-gray-500 ">{data?.date}</p>
+      <Text color={"gray.400"}>{data?.date}</Text>
 
-          <MdxRenderer data={data} />
-        </div>
-      </div>
-    </section>
+      <MdxRenderer data={data} />
+    </Container>
   );
 }

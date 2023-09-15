@@ -7,6 +7,11 @@ import {
   UnorderedList,
   Text,
   Tag,
+  Container,
+  List,
+  Stack,
+  Badge,
+  theme,
 } from "@chakra-ui/react";
 import Link from "next/link";
 
@@ -26,37 +31,46 @@ export default function PostPage() {
 
   // TODO: 컴포넌트로 분리
   return (
-    <section className="flex flex-col flex-1 items-center justify-center align-middle md:w-176 pb-10">
+    <Container maxW={"container.md"} pb={8}>
       <TagList tags={uniqTags} />
 
-      <UnorderedList spacing={4}>
+      <List spacing={8}>
         {posts.map((post) => (
-          <ListItem key={post._id} className="card w-full md:w-176">
+          <ListItem
+            key={post._id}
+            p={4}
+            borderBottom={`1px solid ${theme.colors.facebook[200]}`}
+          >
             <Link href={`post/${encodeURIComponent(post.title)}`}>
-              <Card size={"lg"} variant={"outline"} p={4}>
-                <Heading as={"h2"} size={"md"}>
-                  {post.title}
-                </Heading>
+              <Stack
+                direction={"row"}
+                justifyContent={"space-between"}
+                alignItems={"center"}
+              >
+                <Stack>
+                  <Text fontSize={"sm"}>{post.date}</Text>
+                </Stack>
 
-                <Text maxH={12} overflow={"hidden"} textOverflow={"ellipsis"}>
-                  {post.description}
-                </Text>
-                <span className="text-ellipsis overflow-hidden h-12 text-gray-500">
-                  {post.date}
-                </span>
-
-                <div className="card-actions justify-start">
+                <Stack direction={"row"}>
                   {post.tags.map((tag) => (
-                    <Tag key={tag} variant={"outline"} colorScheme={"blue"}>
+                    <Badge key={tag} colorScheme={"facebook"}>
                       {tag}
-                    </Tag>
+                    </Badge>
                   ))}
-                </div>
-              </Card>
+                </Stack>
+              </Stack>
+
+              <Heading as={"h2"} size={"md"} paddingBlock={2}>
+                {post.title}
+              </Heading>
+
+              <Text maxH={12} overflow={"hidden"} textOverflow={"ellipsis"}>
+                {post.description}
+              </Text>
             </Link>
           </ListItem>
         ))}
-      </UnorderedList>
-    </section>
+      </List>
+    </Container>
   );
 }

@@ -1,28 +1,25 @@
 "use client";
 
+import {
+  Card,
+  Heading,
+  Link,
+  OrderedList,
+  Tag,
+  Text,
+  UnorderedList,
+} from "@chakra-ui/react";
 import { MDXComponents } from "mdx/types";
 import { useMDXComponent } from "next-contentlayer/hooks";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 const mdxComponents: MDXComponents = {
-  a: (props) => <a className="underline" {...props}></a>,
-  h2: (props) => (
-    <h2 className="text-xl md:text-2xl mt-12 font-bold" {...props}></h2>
-  ),
+  a: (props) => <Link color={"facebook.400"} {...props}></Link>,
+  h2: (props) => <Heading fontSize={"2xl"} pt={12} {...props}></Heading>,
   h3: (props) => <h3 className="text-xl pt-8 font-bold" {...props}></h3>,
-  ul: (props) => (
-    <ul
-      className="marker:text-blue-500 list-disc pl-5 space-y-1"
-      {...props}
-    ></ul>
-  ),
-  ol: (props) => (
-    <ol
-      className="marker:text-blue-500 list-decimal pl-5 space-y-1"
-      {...props}
-    ></ol>
-  ),
+  ul: (props) => <UnorderedList {...props}></UnorderedList>,
+  ol: (props) => <OrderedList {...props}></OrderedList>,
   code: ({ className, children, ...props }) => {
     const match = /language-(\w+)/.exec(className || "");
 
@@ -35,8 +32,7 @@ const mdxComponents: MDXComponents = {
         style={dark}
       ></SyntaxHighlighter>
     ) : (
-      <code
-        className="stack bg-gray-100 p-1 rounded-lg text-sm text-primary"
+      <Tag
         {...props}
         style={{
           //@ts-ignore
@@ -44,12 +40,14 @@ const mdxComponents: MDXComponents = {
         }}
       >
         {children}
-      </code>
+      </Tag>
     );
   },
   p: (props) => <p {...props}></p>,
   blockquote: (props) => (
-    <blockquote {...props} className=" bg-slate-100 p-2"></blockquote>
+    <Card variant={"filled"} p={2}>
+      <blockquote {...props}></blockquote>
+    </Card>
   ),
 };
 

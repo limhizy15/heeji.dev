@@ -1,11 +1,18 @@
-import { HStack, Tag } from "@chakra-ui/react";
+import { Badge, Button, HStack, Stack, Tag } from "@chakra-ui/react";
 
 export default function TagList({ tags }: { tags: string[] }) {
   return (
-    <section className="flex flex-wrap md:w-176 gap-2 p-8">
+    <Stack
+      flexDirection={"row"}
+      paddingInline={4}
+      paddingBlock={8}
+      flexWrap={"wrap"}
+    >
       {tags.map((tag) => (
-        <Tag key={tag}>#{tag}</Tag>
+        <Button key={tag} padding={2}>
+          #{tag}
+        </Button>
       ))}
-    </section>
+    </Stack>
   );
 }
