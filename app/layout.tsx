@@ -26,7 +26,7 @@ export default async function RootLayout({
             <Nav theme={theme} />
           </header>
 
-          <main className="flex align-middle justify-center items-center">
+          <main className="flex align-middle justify-center items-center ">
             {children}
           </main>
         </Providers>
