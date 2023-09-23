@@ -31,42 +31,44 @@ export default function PostPage() {
 
   // TODO: 컴포넌트로 분리
   return (
-    <Container maxW={"container.md"} pb={8}>
-      <TagList tags={uniqTags} />
+    <Container maxW={"container.md"} py={8}>
+      {/* <TagList tags={uniqTags} /> */}
 
       <List spacing={8}>
         {posts.map((post) => (
           <ListItem
             key={post._id}
             p={4}
-            borderBottom={`1px solid ${theme.colors.facebook[200]}`}
+            border={`1px solid ${theme.colors.black}`}
+            borderRadius={5}
+            // borderBottom={`1px solid ${theme.colors.facebook[200]}`}
           >
             <Link href={`post/${encodeURIComponent(post.title)}`}>
-              <Stack
-                direction={"row"}
-                justifyContent={"space-between"}
-                alignItems={"center"}
-              >
-                <Stack>
-                  <Text fontSize={"sm"}>{post.date}</Text>
-                </Stack>
+              <Stack spacing={2}>
+                <Heading as={"h2"} size={"md"} paddingBlock={2}>
+                  {post.title}
+                </Heading>
 
-                <Stack direction={"row"}>
-                  {post.tags.map((tag) => (
-                    <Badge key={tag} colorScheme={"facebook"}>
-                      {tag}
-                    </Badge>
-                  ))}
+                <Text maxH={12} overflow={"hidden"} textOverflow={"ellipsis"}>
+                  {post.description}
+                </Text>
+
+                <Stack
+                  direction={"row"}
+                  justifyContent={"space-between"}
+                  alignItems={"center"}
+                >
+                  <Stack>
+                    <Text fontSize={"sm"}>{post.date}</Text>
+                  </Stack>
+
+                  <Stack direction={"row"}>
+                    {post.tags.map((tag) => (
+                      <Badge key={tag}>{tag}</Badge>
+                    ))}
+                  </Stack>
                 </Stack>
               </Stack>
-
-              <Heading as={"h2"} size={"md"} paddingBlock={2}>
-                {post.title}
-              </Heading>
-
-              <Text maxH={12} overflow={"hidden"} textOverflow={"ellipsis"}>
-                {post.description}
-              </Text>
             </Link>
           </ListItem>
         ))}

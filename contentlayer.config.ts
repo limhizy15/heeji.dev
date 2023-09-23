@@ -19,7 +19,10 @@ export default makeSource({
   documentTypes: [Post],
   mdx: {
     remarkPlugins: [
-      [remarkCodeHike, { theme: "material-darker", lineNumbers: true }],
+      [
+        remarkCodeHike,
+        { theme: "material-darker", lineNumbers: true, showCopyButton: true },
+      ],
     ],
   },
 });

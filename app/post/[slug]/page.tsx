@@ -1,6 +1,6 @@
 import { allPosts } from "@/.contentlayer/generated";
 import MdxRenderer from "@/app/_components/NdxRenderer";
-import { Container, Heading, Text } from "@chakra-ui/react";
+import { Container, Divider, Heading, Text } from "@chakra-ui/react";
 
 function getPost(title: string) {
   const foundPost = allPosts.find(
@@ -22,6 +22,9 @@ export default function PostDetailPage({
       <Heading>{data?.title}</Heading>
 
       <Text color={"gray.400"}>{data?.date}</Text>
+
+      <Divider my={4} colorScheme={"blackAlpha"} />
+      {/* <Text>HEEJI</Text> */}
 
       <MdxRenderer data={data} />
     </Container>

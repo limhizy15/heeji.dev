@@ -2,6 +2,7 @@
 
 import {
   Card,
+  Code,
   Heading,
   Link,
   OrderedList,
@@ -15,7 +16,9 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 const mdxComponents: MDXComponents = {
-  a: (props) => <Link color={"facebook.400"} {...props}></Link>,
+  a: (props) => (
+    <Link color={"blue.500"} style={{ fontWeight: "bold" }} {...props}></Link>
+  ),
   h2: (props) => <Heading fontSize={"2xl"} pt={12} {...props}></Heading>,
   h3: (props) => <h3 className="text-xl pt-8 font-bold" {...props}></h3>,
   ul: (props) => <UnorderedList {...props}></UnorderedList>,
@@ -32,20 +35,21 @@ const mdxComponents: MDXComponents = {
         style={dark}
       ></SyntaxHighlighter>
     ) : (
-      <Tag
+      <Code
         {...props}
         style={{
           //@ts-ignore
           textWrap: "wrap",
+          fontWeight: "bold",
         }}
       >
         {children}
-      </Tag>
+      </Code>
     );
   },
-  p: (props) => <p {...props}></p>,
+  p: (props) => <Text {...props}></Text>,
   blockquote: (props) => (
-    <Card variant={"filled"} p={2}>
+    <Card variant={"outline"} p={4}>
       <blockquote {...props}></blockquote>
     </Card>
   ),

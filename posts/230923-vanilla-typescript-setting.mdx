@@ -21,7 +21,7 @@ tags:
 
 폴더를 생성하고 프로젝트를 만들어주자.
 
-```
+```shell
 npm init -y
 ```
 
@@ -29,18 +29,14 @@ npm init -y
 
 `eslint`와 `prettier` 세팅을 먼저 해보자
 
-<br />
-
 - `eslint`는 **일관된 코드 스타일**을 가져가기 위해 사용한다.
 - `prettier`는 eslint와 다르게 indent, tabSize 등을 통일시켜 **코드를 보기 좋게** 만드는데 도움이 된다.
-
-<br />
 
 ### eslint
 
 먼저 eslint 관련 의존성을 설치해보자
 
-```
+```shell
 npm i -D eslint eslint-plugin-import eslint-plugin-node eslint-plugin-promise eslint-plugin-standard
 ```
 
@@ -48,7 +44,7 @@ npm i -D eslint eslint-plugin-import eslint-plugin-node eslint-plugin-promise es
 
 `.eslintrc` 파일을 루트에 추가해준다.
 
-```
+```json
 // .eslintrc
 {
   "env": {
@@ -65,14 +61,13 @@ npm i -D eslint eslint-plugin-import eslint-plugin-node eslint-plugin-promise es
     "no-console": "warn"
   }
 }
-
 ```
 
-- env: 코드의 환경. 어떤 환경에서 코드가 실행되는지를 나타낸다.
-- extends: 베이스가 되는 eslint 룰이다.
-- parserOptions: 읽어올 코드에 대한 정보.
-- plugins: 기본 규칙 외 부가적인 규칙 (앞에서 설치한 plugin들을 여기에 적어준다.)
-- rules: 유저가 따로 정의하는 규칙
+- **env**: 코드의 환경. 어떤 환경에서 코드가 실행되는지를 나타낸다.
+- **extends**: 베이스가 되는 eslint 룰이다.
+- **parserOptions**: 읽어올 코드에 대한 정보.
+- **plugins**: 기본 규칙 외 부가적인 규칙 (앞에서 설치한 plugin들을 여기에 적어준다.)
+- **rules**: 유저가 따로 정의하는 규칙
 
 <br />
 여기까지 잘 설정되었는지 확인하려면 `index.js` 파일을 만들고 콘솔로그를 추가하면
@@ -80,19 +75,17 @@ npm i -D eslint eslint-plugin-import eslint-plugin-node eslint-plugin-promise es
 
 <img src={"/image/vanilla-js-1.png"} />
 
-<br />
-
 ### prettier
 
-prettier를 사용하기 위한 의존성을 추가해보자.
+`prettier`를 사용하기 위한 의존성을 추가해보자.
 
-```
+```shell
 npm i -D prettier eslint-config-prettier eslint-plugin-prettier
 ```
 
 마찬가지로 설정 파일이 필요하다. 루트에 `.prettierrc` 파일을 추가해주자
 
-```
+```json
 // .prettierrc
 {
   "useTabs": false,
@@ -108,11 +101,8 @@ npm i -D prettier eslint-config-prettier eslint-plugin-prettier
 
 이렇게 하면 `index.js`에서 `console.log("heeji")`로 입력한 후 저장하면 `console.log('heeji')`으로 자동으로 변환된다. (vscode 기준 eslint, prettier 확장을 설치하고 format on save 설정이 완료된 상태일 때)
 
-<br />
-
 이렇게 해서 기본적인 코드 스타일에 관련된 설정을 마쳤다.
 
-<br />
 ## 2. babel, webpack 설정
 
 ### babel
@@ -134,18 +124,18 @@ npm i -D prettier eslint-config-prettier eslint-plugin-prettier
 
 babel에 필요한 의존성을 추가해준다.
 
-```
+```shell
 npm i -D @babel/core @babel/preset-env
 ```
 
-- @babel/core: babel 동작에 필요한 핵심 패키지
-- @babel/preset-env: 코드를 변환하는 규칙을 담고 있는 상자라고 생각하면 된다. 여기에서는 타겟 환경에 대한 변환 규칙과 폴리필들이 선언되어있다. [공식문서 참고](https://babeljs.io/docs/babel-preset-env)
+- **@babel/core**: babel 동작에 필요한 핵심 패키지
+- **@babel/preset-env**: 코드를 변환하는 규칙을 담고 있는 상자라고 생각하면 된다. 여기에서는 타겟 환경에 대한 변환 규칙과 폴리필들이 선언되어있다. [공식문서 참고](https://babeljs.io/docs/babel-preset-env)
 
   <br />
 
 마찬가지로 설정이 필요하다. `.babelrc`파일을 루트에 추가해준다.
 
-```
+```json
 // .babelrc
 {
   "presets": ["@babel/preset-env"]
@@ -170,13 +160,13 @@ npm i -D @babel/core @babel/preset-env
 
 webpack 사용에 필요한 의존성을 설치한다.
 
-```
+```shell
 npm i -D babel-loader webpack-dev-server webpack-cli
 ```
 
-- babel-loader: 코드를 읽고 변환하는 역할을 babel이 담당할 수 있도록 webpack의 loader에 추가할 것
-- webpack-dev-server: 개발 서버
-- webpack-cli: cli에서 webpack 명령어를 사용할 수 있도록 해준다.
+- **babel-loader**: 코드를 읽고 변환하는 역할을 babel이 담당할 수 있도록 webpack의 loader에 추가할 것
+- **webpack-dev-server**: 개발 서버
+- **webpack-cli**: cli에서 webpack 명령어를 사용할 수 있도록 해준다.
 
   <br />
 
@@ -210,9 +200,9 @@ module.exports = {
 };
 ```
 
-- entry: 빌드의 시작점
-- output: 빌드된 결과물이 위치할 곳
-- module: webpack에 도움을 주는 loader들을 어떤 파일일 때 어떤 로더를 쓸 지 설정해준다.
+- **entry**: 빌드의 시작점
+- **output**: 빌드된 결과물이 위치할 곳
+- **module**: webpack에 도움을 주는 loader들을 어떤 파일일 때 어떤 로더를 쓸 지 설정해준다.
 
 <br />
 
@@ -226,7 +216,7 @@ module.exports = {
 eslint 설정에서 overrides를 활용해 `webpack.config.js`는 다른 parserOptions를 주도록
 해보자. 파일 마지막에 overrides 설정을 추가해 해당 파일은 module이 아니라고 이야기해준다.
 
-```
+```json
 // .eslintrc
 {
   // 앞의 설정들..
@@ -243,14 +233,14 @@ eslint 설정에서 overrides를 활용해 `webpack.config.js`는 다른 parserO
 
 이렇게 해도 여전히 경고가 나오는데 우리가 `webpack.config.js`에서 사용한 `module.exports`나 `require` 구문을 eslint가 이해할 수 있도록 설정하지 않았기 때문에 에러가 난다. env에 node를 추가해 eslint가 이해할 수 있도록 해주자.
 
-```
+```json
 // .eslintrc
 {
   "env": {
     "browser": true,
     "es2021": true,
     "node": true // 추가
-  },
+  }
   // 생략
 }
 ```
@@ -259,7 +249,7 @@ eslint 설정에서 overrides를 활용해 `webpack.config.js`는 다른 parserO
 
 추가로 package.json에 script 명령어를 추가해서 webpack의 build 기능을 쉽게 쓰도록 해보자.
 
-```
+```json
 // package.json
 "scripts": {
 	"test": "echo \"Error: no test specified\" && exit 1",
@@ -332,12 +322,11 @@ if ($root != null) {
 
 무사히 자바스크립트가 실행된 것을 확인할 수 있다. 그런데 문제는 자바스크립트 코드를 수정할 때마다 `npm run build`를 수행하고 index.html에서 script의 src를 변경해줘야하는 번거로움이 있다.
 
-<br />
 ### html plugin 추가{" "}
 
 다행히도 이런 귀찮음을 없애줄 수 있는 webpack 플러그인이 있다.
 
-```
+```shell
 npm i -D html-webpack-plugin
 ```
 
@@ -375,29 +364,29 @@ module.exports = {
 
 ### dev server 세팅
 
-```
+```shell
 npm i -D webpack-dev-server
 ```
 
 다음과 같이 devServer 설정을 추가해준다.
 
-```
+```js
 // webpack.config.js
-const path = require('path')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   // 중략..
   devServer: {
     hot: true,
-    open: true
-  }
-}
+    open: true,
+  },
+};
 ```
 
 package.json에 script를 추가해준다.
 
-```
+```json
 "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack serve --mode development", // 추가
@@ -413,22 +402,18 @@ package.json에 script를 추가해준다.
 
 ## (번외) 타입스크립트를 추가해보자.
 
-```
+```shell
 npm i -D typescript @typescript-eslint/eslint-plugin  @typescript-eslint/parser
 ```
 
 루트에 `tsconfig.json` 파일을 추가
 
-```
+```json
 // tsconfig.json
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -442,26 +427,23 @@ npm i -D typescript @typescript-eslint/eslint-plugin  @typescript-eslint/parser
     "isolatedModules": true,
     "noEmit": true
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src"]
 }
 ```
 
 babel 설정
 
-```
+```shell
 npm i -D @babel/preset-typescript
 ```
 
 설정에 추가
 
-```
+```json
 // .babelrc
 {
   "presets": ["@babel/preset-env", "@babel/preset-typescript"]
 }
-
 ```
 
 이렇게 해주고 index.js를 index.ts로 바꿔준 후 파일 내용도 바꿔보자.
