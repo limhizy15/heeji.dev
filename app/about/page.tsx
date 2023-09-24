@@ -4,19 +4,18 @@ import {
   Divider,
   Flex,
   Heading,
-  List,
   ListItem,
   Stack,
   Tag,
   Text,
   UnorderedList,
 } from "@chakra-ui/react";
-import { PhoneIcon, AddIcon, WarningIcon } from "@chakra-ui/icons";
+import { PhoneIcon } from "@chakra-ui/icons";
 import Image from "next/image";
 
 export default function AboutPage() {
   return (
-    <Container paddingBlock={4} maxW={"container.md"}>
+    <Container paddingBlock={4} maxW={"container.lg"}>
       <Heading color={"red"}>공사중!⚒️</Heading>
 
       <Heading

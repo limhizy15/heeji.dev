@@ -12,7 +12,7 @@ const navlinks: { title: string; link: string }[] = [
 
 export default function Nav({ theme }: { theme: CookieValueTypes }) {
   return (
-    <Container maxW={"container.md"} pt={4}>
+    <Container maxW={"container.lg"} pt={4}>
       <Stack flexDir={"row"} justifyContent={"space-between"}>
         <Stack flexDir={"row"} spacing={1}>
           {navlinks.map((nav) => (

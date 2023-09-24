@@ -1,17 +1,14 @@
 import { allPosts } from "@/.contentlayer/generated";
 import TagList from "@/app/_components/TagList";
 import {
-  Card,
   Heading,
-  ListItem,
-  UnorderedList,
   Text,
-  Tag,
   Container,
-  List,
   Stack,
   Badge,
-  theme,
+  Image,
+  Grid,
+  GridItem,
 } from "@chakra-ui/react";
 import Link from "next/link";
 
@@ -31,25 +28,44 @@ export default function PostPage() {
 
   // TODO: 컴포넌트로 분리
   return (
-    <Container maxW={"container.md"} py={8}>
+    <Container maxW={"container.lg"} py={8}>
       {/* <TagList tags={uniqTags} /> */}
 
-      <List spacing={8}>
+      <Grid
+        templateColumns={{
+          base: "repeat(1, 1fr)",
+          md: "repeat(2, 1fr)",
+          lg: "repeat(3, 1fr)",
+        }}
+        gap={6}
+      >
         {posts.map((post) => (
-          <ListItem
-            key={post._id}
-            p={4}
-            border={`1px solid ${theme.colors.black}`}
-            borderRadius={5}
-            // borderBottom={`1px solid ${theme.colors.facebook[200]}`}
-          >
+          <GridItem key={post._id} borderRadius={5}>
             <Link href={`post/${encodeURIComponent(post.title)}`}>
               <Stack spacing={2}>
-                <Heading as={"h2"} size={"md"} paddingBlock={2}>
+                <Image
+                  src={post.thumbnailURL}
+                  height={"180px"}
+                  objectFit={"cover"}
+                  borderRadius={10}
+                />
+
+                <Stack direction={"row"}>
+                  {post.tags.map((tag) => (
+                    <Badge key={tag}>{tag}</Badge>
+                  ))}
+                </Stack>
+
+                <Heading as={"h2"} size={"md"}>
                   {post.title}
                 </Heading>
 
-                <Text maxH={12} overflow={"hidden"} textOverflow={"ellipsis"}>
+                <Text
+                  fontSize={"sm"}
+                  overflow={"hidden"}
+                  textOverflow={"ellipsis"}
+                  noOfLines={3}
+                >
                   {post.description}
                 </Text>
 
@@ -61,18 +77,12 @@ export default function PostPage() {
                   <Stack>
                     <Text fontSize={"sm"}>{post.date}</Text>
                   </Stack>
-
-                  <Stack direction={"row"}>
-                    {post.tags.map((tag) => (
-                      <Badge key={tag}>{tag}</Badge>
-                    ))}
-                  </Stack>
                 </Stack>
               </Stack>
             </Link>
-          </ListItem>
+          </GridItem>
         ))}
-      </List>
+      </Grid>
     </Container>
   );
 }
