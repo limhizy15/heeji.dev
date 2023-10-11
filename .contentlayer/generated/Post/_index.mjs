@@ -14,5 +14,6 @@ import _230915TilClosureMdx from './_230915-til-closure.mdx.json' assert { type:
 import _230919TilPrototypeMdx from './_230919-til-prototype.mdx.json' assert { type: 'json' }
 import _230923VanillaTypescriptSettingMdx from './_230923-vanilla-typescript-setting.mdx.json' assert { type: 'json' }
 import _230925TilScopeMdx from './_230925-til-scope.mdx.json' assert { type: 'json' }
+import _231011TilHtmlMdx from './_231011-til-html.mdx.json' assert { type: 'json' }
 
-export const allPosts = [_211017ProjectOttichuMdx, _211122RetrospectivesNovember_2021Mdx, _220517TilReactHookMdx, _230815TilCriticalRenderingPathMdx, _230817TilBrowserUrlMdx, _230820TilReflowAndRepaintMdx, _230824TilAsynchronousMdx, _230830TilEventLoopMdx, _230907TilSpaMdx, _230913TilFirstClassObjectMdx, _230915TilClosureMdx, _230919TilPrototypeMdx, _230923VanillaTypescriptSettingMdx, _230925TilScopeMdx]
+export const allPosts = [_211017ProjectOttichuMdx, _211122RetrospectivesNovember_2021Mdx, _220517TilReactHookMdx, _230815TilCriticalRenderingPathMdx, _230817TilBrowserUrlMdx, _230820TilReflowAndRepaintMdx, _230824TilAsynchronousMdx, _230830TilEventLoopMdx, _230907TilSpaMdx, _230913TilFirstClassObjectMdx, _230915TilClosureMdx, _230919TilPrototypeMdx, _230923VanillaTypescriptSettingMdx, _230925TilScopeMdx, _231011TilHtmlMdx]

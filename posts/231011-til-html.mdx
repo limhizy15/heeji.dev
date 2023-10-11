@@ -1,0 +1,96 @@
+---
+title: HTML 정리
+date: 2023-10-11
+description: HTML 관련 주요 내용 정리
+thumbnailURL: https://github-production-user-asset-6210df.s3.amazonaws.com/41099712/274318525-3070c036-2dcb-4357-8708-0a7de26bd402.png
+tags:
+  - til
+  - HTML
+---
+
+## HTML (Hypertext Markup Language)
+
+웹 페이지를 표시하기 위해 개발된 언어이다. 구조적인 문서를 만들 수 있는 방법을 제공한다. 브라우저는 HTML 문서를 해석해서 웹페이지로 보여주는 역할을 한다.
+
+### DOCTYPE
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Hello World!</h1>
+  </body>
+</html>
+```
+
+HTML 최상단에 `<!DOCTYPE html>` 형태로 작성한다. 웹 브라우저에 해당 문서의 버전이나 타입을 알려주는 역할을 한다. DOCTYPE을 선언하지 않으면 브라우저는 쿼크모드로 문서를 해석한다.
+
+<aside>
+💡 쿼크모드
+- 브라우저 하위 호환성을 위해 존재하며 현대의 웹 표준과는 다르게 동작할 수 있다.
+
+</aside>
+
+### `<head>`
+
+문서에 대한 정보와 설정, 외부 리소스 연결 등을 담당한다.
+
+```html
+<head>
+  <title>BLOG | heeji.dev</title>
+  <script
+    src="/_next/static/chunks/fd9d1056-6f9b53447c266b93.js"
+    async=""
+  ></script>
+</head>
+```
+
+- `<title>`: 문서의 제목을 정의
+- `<script>`: 불러올 자바스크립트 파일을 정의
+- 그 외 `<link>`, `<style>` 등 리소스를 연결한다.
+
+### `<meta>`
+
+문서의 메타데이터를 나타낸다. 인코딩 방식, 저자, 뷰포트 설정, 페이지 설명과 같은 정보를 제공한다.
+
+```html
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="프론트엔드 개발자의 블로그입니다." />
+
+<meta property="og:title" content="스코프와 스코프체인 | HEEJI.DEV" />
+<meta
+  property="og:description"
+  content="자바스크립트에서 스코프가 어떻게 구성되는지 알아봅니다."
+/>
+```
+
+- property 속성에 og를 추가하면 링크를 공유했을 때 미리보기에 보이는 메타데이터를 정의할 수 있다.
+
+## **웹 접근성** (Web Accessibility)
+
+장애인, 고령자들이 웹 사이트에서 제공하는 정보에 비장애인과 동등하게 접근하고 이해할 수 있도록 보장하는 것이다.
+
+### a**ria**
+
+웹 접근성을 향상시키기 위한 기술이다. HTML을 보충해 상호작용이나 필요한 정보를 제공한다.
+
+## **시맨틱 태그**
+
+태그에 의미를 부여하는 것. 시맨틱 태그를 사용하면 웹 페이지의 구조와 컨텐츠의 의미가 명확하다. 검색 엔진이나 스크린 리더가 페이지를 더 잘 이해하고 해석할 수 있다.
+
+가독성이 좋아져 유지보수에 좋다.
+
+## 참고자료
+
+- https://ko.wikipedia.org/wiki/HTML
+- [https://ko.wikipedia.org/wiki/문서*형식*선언](https://ko.wikipedia.org/wiki/%EB%AC%B8%EC%84%9C_%ED%98%95%EC%8B%9D_%EC%84%A0%EC%96%B8)
+- [https://ko.wikipedia.org/wiki/쿼크\_모드](https://ko.wikipedia.org/wiki/%EC%BF%BC%ED%81%AC_%EB%AA%A8%EB%93%9C)
+- https://developer.mozilla.org/ko/docs/Web/Accessibility/ARIA
+- https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes
