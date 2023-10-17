@@ -19,7 +19,9 @@ const mdxComponents: MDXComponents = {
   a: (props) => (
     <Link color={"blue.500"} style={{ fontWeight: "bold" }} {...props}></Link>
   ),
-  h2: (props) => <Heading fontSize={"2xl"} pt={12} {...props}></Heading>,
+  h2: (props) => (
+    <Heading fontSize={"2xl"} pt={4} {...props} lineHeight={1.8}></Heading>
+  ),
   h3: (props) => <h3 className="text-xl pt-8 font-bold" {...props}></h3>,
   ul: (props) => <UnorderedList {...props}></UnorderedList>,
   ol: (props) => <OrderedList {...props}></OrderedList>,
@@ -47,7 +49,7 @@ const mdxComponents: MDXComponents = {
       </Code>
     );
   },
-  p: (props) => <Text {...props}></Text>,
+  p: (props) => <Text {...props} style={{ lineHeight: 1.7 }}></Text>,
   blockquote: (props) => (
     <Card variant={"outline"} p={4}>
       <blockquote {...props}></blockquote>
