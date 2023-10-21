@@ -5,6 +5,7 @@ import "@/styles/highlight-js/a11y-dark.css";
 import { getCurrentTheme } from "@/utils/colorTheme";
 import "@code-hike/mdx/dist/index.css";
 import { Providers } from "./providers";
+import styles from "./layout.module.css";
 
 export const metadata: Metadata = {
   title: "BLOG | heeji.dev",
@@ -26,9 +27,7 @@ export default async function RootLayout({
             <Nav theme={theme} />
           </header>
 
-          <main className="flex align-middle justify-center items-center ">
-            {children}
-          </main>
+          <main className={styles.mainLayout}>{children}</main>
         </Providers>
       </body>
     </html>

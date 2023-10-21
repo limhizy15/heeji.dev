@@ -1,16 +1,7 @@
 import { allPosts } from "@/.contentlayer/generated";
-import TagList from "@/app/_components/TagList";
-import {
-  Heading,
-  Text,
-  Container,
-  Stack,
-  Badge,
-  Image,
-  Grid,
-  GridItem,
-} from "@chakra-ui/react";
+import { Text, Container, Image, Grid, GridItem } from "@chakra-ui/react";
 import Link from "next/link";
+import styles from "./page.module.css";
 
 function getPosts() {
   const posts = allPosts.sort(
@@ -28,8 +19,8 @@ export default function PostPage() {
 
   // TODO: 컴포넌트로 분리
   return (
-    <Container maxW={"container.lg"} py={8}>
-      {/* <TagList tags={uniqTags} /> */}
+    <Container maxW={"container.lg"}>
+      <h1 className={styles.title}>POSTS</h1>
 
       <Grid
         templateColumns={{
@@ -38,47 +29,48 @@ export default function PostPage() {
           lg: "repeat(3, 1fr)",
         }}
         gap={6}
+        py={2}
       >
         {posts.map((post) => (
-          <GridItem key={post._id} borderRadius={5}>
+          <GridItem
+            className={styles.postGridItem}
+            key={post._id}
+            borderRadius={5}
+          >
             <Link href={`post/${encodeURIComponent(post.title)}`}>
-              <Stack spacing={2}>
+              <div>
                 <Image
                   src={post.thumbnailURL}
+                  alt={`${post.title}-thumbnail-image`}
+                  width={"100%"}
                   height={"180px"}
                   objectFit={"cover"}
-                  borderRadius={10}
+                  borderRadius={4}
                 />
 
-                <Stack direction={"row"}>
-                  {post.tags.map((tag) => (
-                    <Badge key={tag}>{tag}</Badge>
-                  ))}
-                </Stack>
+                <div className={styles.postInfoLayout}>
+                  <h2
+                    className={styles.postTitle}
+                    style={{
+                      fontSize: "20px",
+                      fontWeight: "900",
+                    }}
+                  >
+                    {post.title}
+                  </h2>
 
-                <Heading as={"h2"} size={"md"}>
-                  {post.title}
-                </Heading>
+                  <span
+                    style={{
+                      fontWeight: 500,
+                      fontSize: "16px",
+                    }}
+                  >
+                    {post.description}
+                  </span>
 
-                <Text
-                  fontSize={"sm"}
-                  overflow={"hidden"}
-                  textOverflow={"ellipsis"}
-                  noOfLines={3}
-                >
-                  {post.description}
-                </Text>
-
-                <Stack
-                  direction={"row"}
-                  justifyContent={"space-between"}
-                  alignItems={"center"}
-                >
-                  <Stack>
-                    <Text fontSize={"sm"}>{post.date}</Text>
-                  </Stack>
-                </Stack>
-              </Stack>
+                  <Text fontSize={"sm"}>{post.date}</Text>
+                </div>
+              </div>
             </Link>
           </GridItem>
         ))}

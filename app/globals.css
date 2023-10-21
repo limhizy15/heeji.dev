@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --color-black: #100d0eff;
+  --color-white: #f9f4daff;
+  --color-yellow: #fcba28ff;
+  --color-pink: #f38ba3ff;
+  --color-purple: #7b5ea6ff;
+}
+
+* {
+  color: var(--color-white);
+}

@@ -6,7 +6,6 @@ import {
   Heading,
   Link,
   OrderedList,
-  Tag,
   Text,
   UnorderedList,
 } from "@chakra-ui/react";
@@ -14,13 +13,12 @@ import { MDXComponents } from "mdx/types";
 import { useMDXComponent } from "next-contentlayer/hooks";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import styles from "./NdxRenderer.module.css";
 
 const mdxComponents: MDXComponents = {
-  a: (props) => (
-    <Link color={"blue.500"} style={{ fontWeight: "bold" }} {...props}></Link>
-  ),
+  a: (props) => <Link className={styles.a} {...props}></Link>,
   h2: (props) => (
-    <Heading fontSize={"2xl"} pt={4} {...props} lineHeight={1.8}></Heading>
+    <Heading className={styles.h2} fontSize={"2xl"} {...props}></Heading>
   ),
   h3: (props) => <h3 className="text-xl pt-8 font-bold" {...props}></h3>,
   ul: (props) => <UnorderedList {...props}></UnorderedList>,
@@ -37,21 +35,14 @@ const mdxComponents: MDXComponents = {
         style={dark}
       ></SyntaxHighlighter>
     ) : (
-      <Code
-        {...props}
-        style={{
-          //@ts-ignore
-          textWrap: "wrap",
-          fontWeight: "bold",
-        }}
-      >
+      <Code className={styles.codeBlock} {...props}>
         {children}
       </Code>
     );
   },
   p: (props) => <Text {...props} style={{ lineHeight: 1.7 }}></Text>,
   blockquote: (props) => (
-    <Card variant={"outline"} p={4}>
+    <Card variant={"outline"} p={4} style={{ backgroundColor: "black" }}>
       <blockquote {...props}></blockquote>
     </Card>
   ),

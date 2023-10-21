@@ -43,7 +43,7 @@ export default function PostDetailPage({
   // TODO: 컴포넌트화
   return (
     <Container maxW={"container.md"} paddingBlock={8}>
-      <Heading>{data?.title}</Heading>
+      <Heading style={{ color: "#fcba28ff" }}>{data?.title}</Heading>
 
       <Text color={"gray.400"}>{data?.date}</Text>
 

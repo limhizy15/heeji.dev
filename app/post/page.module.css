@@ -1,0 +1,22 @@
+.title {
+  color: var(--color-white);
+  text-align: center;
+  font-size: 48px;
+  font-weight: 900;
+  font-family: "Paytone One", sans-serif;
+}
+
+.postInfoLayout {
+  display: flex;
+  flex: 1;
+  height: auto;
+  flex-direction: column;
+  gap: 2px;
+  padding-block: 4px;
+  color: var(--color-white);
+  justify-content: space-between;
+}
+
+.postTitle {
+  color: var(--color-white);
+}
