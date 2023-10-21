@@ -1,0 +1,19 @@
+.navbar {
+  background-color: #100d0eff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-block: 8px;
+  padding-inline: 128px;
+}
+
+.navList {
+  display: flex;
+  gap: 16px;
+}
+
+.navItem {
+  color: white;
+  text-decoration: underline;
+  font-size: 20px;
+}

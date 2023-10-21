@@ -1,41 +1,26 @@
-import Link from "next/link";
 import Image from "next/image";
-import ThemeToggleButton from "./ThemeToggleButton";
 import { CookieValueTypes } from "cookies-next";
-import { Button, Container, Stack } from "@chakra-ui/react";
+import styles from "./Nav.module.css";
 
 const navlinks: { title: string; link: string }[] = [
-  // { title: "Home", link: "/" },
-  { title: "Post", link: "/post" },
-  { title: "About", link: "/about" },
+  { title: "posts", link: "/post" },
+  { title: "about", link: "/about" },
 ];
 
 export default function Nav({ theme }: { theme: CookieValueTypes }) {
   return (
-    <Container maxW={"container.lg"} pt={4}>
-      <Stack flexDir={"row"} justifyContent={"space-between"}>
-        <Stack flexDir={"row"} spacing={1}>
-          {navlinks.map((nav) => (
-            <Button key={nav.link}>
-              <Link href={nav.link}>{nav.title}</Link>
-            </Button>
-          ))}
-        </Stack>
+    <nav className={styles.navbar}>
+      <Image src={"/logo.png"} alt="logo-image" width={120} height={120} />
 
-        <Stack flexDir={"row"} spacing={4}>
-          <ThemeToggleButton theme={theme} />
-
-          <div>
-            <Image
-              className="rounded-full"
-              src={"/avatar.jpg"}
-              alt="logo-image"
-              width={40}
-              height={40}
-            />
-          </div>
-        </Stack>
-      </Stack>
-    </Container>
+      <ul className={styles.navList}>
+        {navlinks.map((nav) => (
+          <li key={nav.link}>
+            <a href={nav.link} className={styles.navItem}>
+              {nav.title}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
   );
 }
