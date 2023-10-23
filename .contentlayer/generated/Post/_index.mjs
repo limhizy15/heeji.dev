@@ -16,5 +16,6 @@ import _230923VanillaTypescriptSettingMdx from './_230923-vanilla-typescript-set
 import _230925TilScopeMdx from './_230925-til-scope.mdx.json' assert { type: 'json' }
 import _231011TilHtmlMdx from './_231011-til-html.mdx.json' assert { type: 'json' }
 import _231017TilEventDelegationMdx from './_231017-til-event-delegation.mdx.json' assert { type: 'json' }
+import _231023SpaRouterMdx from './_231023-spa-router.mdx.json' assert { type: 'json' }
 
-export const allPosts = [_211017ProjectOttichuMdx, _211122RetrospectivesNovember_2021Mdx, _220517TilReactHookMdx, _230815TilCriticalRenderingPathMdx, _230817TilBrowserUrlMdx, _230820TilReflowAndRepaintMdx, _230824TilAsynchronousMdx, _230830TilEventLoopMdx, _230907TilSpaMdx, _230913TilFirstClassObjectMdx, _230915TilClosureMdx, _230919TilPrototypeMdx, _230923VanillaTypescriptSettingMdx, _230925TilScopeMdx, _231011TilHtmlMdx, _231017TilEventDelegationMdx]
+export const allPosts = [_211017ProjectOttichuMdx, _211122RetrospectivesNovember_2021Mdx, _220517TilReactHookMdx, _230815TilCriticalRenderingPathMdx, _230817TilBrowserUrlMdx, _230820TilReflowAndRepaintMdx, _230824TilAsynchronousMdx, _230830TilEventLoopMdx, _230907TilSpaMdx, _230913TilFirstClassObjectMdx, _230915TilClosureMdx, _230919TilPrototypeMdx, _230923VanillaTypescriptSettingMdx, _230925TilScopeMdx, _231011TilHtmlMdx, _231017TilEventDelegationMdx, _231023SpaRouterMdx]

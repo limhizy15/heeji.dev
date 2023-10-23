@@ -2,75 +2,65 @@
 title: 프로토타입과 클래스
 date: 2023-09-19
 description: 자바스크립트는 프로토타입 기반 언어입니다. 프로토타입이 어떻게 동작하는지, 어떻게 활용할 수 있는지 알아봅니다.
-thumbnailURL: http://via.placeholder.com/640x480
+thumbnailURL: https://github-production-user-asset-6210df.s3.amazonaws.com/41099712/277334927-c8e5b579-656e-413e-86c2-f182b4ddbc42.png
 tags:
   - TIL
   - javascript
 ---
 
 ## 프로토타입의 정의
+
 - 자바스크립트는 프로토타입 기반 언어이다. 프로토타입 객체를 통해 객체의 메서드와 속성들을 상속한다.
 - 자바스크립트에서는 객체를 생성할 때 자신의 부모 객체와 연결되는 링크를 가지게 된다.
 
 ## 프로토타입의 이해
+
 프로토타입을 알아보기 위해 간단한 Person 생성자를 만들어보겠습니다.
+
 ```js
 function Person(name, age) {
   this.name = name;
   this.age = age;
 
-  this.sayHi = function() {
-    console.log('HI')
-  }
+  this.sayHi = function () {
+    console.log("HI");
+  };
 }
 
-console.dir(Person) // 1
+console.dir(Person); // 1
 
-const person1 = new Person('heeji', 100)
+const person1 = new Person("heeji", 100);
 
-console.dir(person1) // 2
+console.dir(person1); // 2
 ```
 
 1의 결과
-<img src={'/image/prototype-1.png'} />
+
+<img src={"/image/prototype-1.png"} />
 
 2의 결과
-<img src={'/image/prototype-2.png'} />
+
+<img src={"/image/prototype-2.png"} />
 
 생성된 person1 인스턴스를 보면 name, age, sayHi가 우리가 정의한대로 생성된 것을 볼 수 있습니다. new 키워드를 생성자 함수 앞에 붙여 인스턴스를 생성하고 (이 때 this는 인스턴스가 된다) 그곳에 속성과 메서드들을 넣어준 것입니다.
 
 콘솔에 찍힌 `prototype`과 `[[Prototype]]`이 눈에 띕니다. 콘솔에서 아무리해도 `person1의 [[Prototype]]`에 접근할 수가 없네요. 검색해봅니다. `[[Prototype]]`의 getter이자 setter인 `__proto__`라는 것이 존재함을 찾을 수 있었습니다.
 
 ```js
-console.dir(Person.prototype)
-console.dir(person1.__proto__)
+console.dir(Person.prototype);
+console.dir(person1.__proto__);
 
-console.log(Person.prototype === person1.__proto__)
+console.log(Person.prototype === person1.__proto__);
 ```
+
 실행 결과
-<img src={'/image/prototype-3.png'} />
+
+<img src={"/image/prototype-3.png"} />
 
 콘솔에 찍어보면 생성자 함수의 `prototype`과 인스턴스의 `__proto__`가 동일한 값임을 알 수 있습니다.
 생성자 함수로 인스턴스를 생성하면 생성자함수의 `prototype`이 인스턴스의 `[[Prototype]]`으로 추가됩니다.
 
 prototype 객체가 있고 이것이 인스턴스의 프로토타입이 된다는 것을 확인했습니다. 좀 더 알아보기 위해 sayHi 함수를 Person의 prototype에 바로 적용해볼까요
-```js
-function Person(name, age) {
-  this.name = name;
-  this.age = age;
-}
-
-Person.prototype.sayHi = function () {
-  console.log('HI')
-}
-
-const person1 = new Person('heeji', 100)
-
-console.dir(Person.prototype)
-console.dir(person1.__proto__)
-```
-<img src={'/image/prototype-4.png'} />
-Person의 `prototype`과 person1의 `__proto__`는 동일한 객체임을 확인할 수 있습니다. 새로운 인스턴스를 생성하기 전에 prototype에 메서드를 추가했기 때문에 가능한 걸까요? 한 번 순서를 바꿔보겠습니다.
 
 ```js
 function Person(name, age) {
@@ -78,67 +68,100 @@ function Person(name, age) {
   this.age = age;
 }
 
-const person1 = new Person('heeji', 100)
-console.dir('1', person1.__proto__)
+Person.prototype.sayHi = function () {
+  console.log("HI");
+};
+
+const person1 = new Person("heeji", 100);
+
+console.dir(Person.prototype);
+console.dir(person1.__proto__);
+```
+
+<img src={"/image/prototype-4.png"} />
+Person의 `prototype`과 person1의 `__proto__`는 동일한 객체임을 확인할 수 있습니다.
+새로운 인스턴스를 생성하기 전에 prototype에 메서드를 추가했기 때문에 가능한 걸까요?
+한 번 순서를 바꿔보겠습니다.
+
+```js
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+}
+
+const person1 = new Person("heeji", 100);
+console.dir("1", person1.__proto__);
 
 Person.prototype.sayHi = function () {
-  console.log('HI')
-}
-person1.sayHi()
+  console.log("HI");
+};
+person1.sayHi();
 
-console.dir('2', Person.prototype)
-console.dir('3', person1.__proto__)
+console.dir("2", Person.prototype);
+console.dir("3", person1.__proto__);
 ```
-<img src={'/image/prototype-5.png'} />
-- 인스턴스 생성 이후에 Person의 prototype에 sayHi 메서드를 정의해도 무사히 sayHi를 사용할 수 있음을 확인했습니다. 이를 통해 우리는 `__proto__`는 `prototype`을 참조하는 값임을 알 수 있습니다. 생성자를 변경했음에도 그 내용이 인스턴스에 반영되니까요
+
+<img src={"/image/prototype-5.png"} />- 인스턴스 생성 이후에 Person의 prototype에
+sayHi 메서드를 정의해도 무사히 sayHi를 사용할 수 있음을 확인했습니다. 이를 통해 우리는
+`__proto__`는 `prototype`을 참조하는 값임을 알 수 있습니다. 생성자를 변경했음에도
+그 내용이 인스턴스에 반영되니까요
 
 이 것을 통해 우리는 응용법을 생각할 수 있습니다. 앞의 예제를 다시 봅시다.
+
 ```js
 function Person(name, age) {
   this.name = name;
   this.age = age;
 
-  this.sayHi = function() {
-    console.log('HI')
-  }
+  this.sayHi = function () {
+    console.log("HI");
+  };
 }
 
-const person1 = new Person('heeji', 20);
-const person2 = new Person('huge', 100)
+const person1 = new Person("heeji", 20);
+const person2 = new Person("huge", 100);
 
-console.dir(person1)
-console.dir(person2)
+console.dir(person1);
+console.dir(person2);
 ```
+
 해당 생성자로 인스턴스를 만들면
-<img src={'/image/prototype-6.png'} />
-인스턴스마다 sayHi 함수가 객체의 프로퍼티로 존재하는 것을 확인할 수 있습니다. 이렇게 되면 인스턴스가 많아질 때 불필요하게 메모리를 사용하게 되는 문제가 생기겠죠
+
+<img src={"/image/prototype-6.png"} />
+인스턴스마다 sayHi 함수가 객체의 프로퍼티로 존재하는 것을 확인할 수 있습니다. 이렇게
+되면 인스턴스가 많아질 때 불필요하게 메모리를 사용하게 되는 문제가 생기겠죠
 
 앞에서 sayHi 메서드를 생성자의 `prototype`에 정의하고 사용하는 예제를 봤습니다. 이렇게 하면 인스턴스 객체의 프로퍼티에 메서드가 정의되는 것이 아니라 프로토타입을 참조해 해당 메서드를 호출할 수 있습니다.
+
 ```js
 function Person(name, age) {
   this.name = name;
   this.age = age;
 }
 
-Person.prototype.sayHi = function() {
-  console.log('HI')
-}
+Person.prototype.sayHi = function () {
+  console.log("HI");
+};
 
-const person1 = new Person('heeji', 20);
-const person2 = new Person('huge', 100)
+const person1 = new Person("heeji", 20);
+const person2 = new Person("huge", 100);
 
-console.dir(person1)
-console.dir(person2)
+console.dir(person1);
+console.dir(person2);
 ```
-<img src={'/image/prototype-9.png'} />
-콘솔을 보면 각 인스턴스에 sayHi 프로퍼티가 없는 것을 확인할 수 있습니다. 이렇게 되면 메모리를 아낄 수 있겠네요.
+
+<img src={"/image/prototype-9.png"} />
+콘솔을 보면 각 인스턴스에 sayHi 프로퍼티가 없는 것을 확인할 수 있습니다. 이렇게 되면
+메모리를 아낄 수 있겠네요.
 
 그런데 이상합니다. person1에 sayHi라는 프로퍼티가 없는데 어떻게 `person1.sayHi()`를 호출할 수 있는 걸까요? 이는 **프로토타입 체이닝** 덕분입니다.
 
 자바스크립트는 person1.sayHi() 구문을 보고 먼저 person1이 해당 프로퍼티를 가지고 있는지 확인합니다. 만약 없다면 person1의 `__proto__`에서 해당 프로퍼티를 찾습니다. 이곳에서 찾으면 그것을 사용하게 됩니다. 만약 이곳에 또 없다면 `__proto__`의 `__proto__`를 찾아봅니다. 이런 식으로 프로토타입이 줄줄이 엮여있는 것을 **프로토타입 체인**이라고 하고 속성을 찾아다니는 것을 **프로토타입 체이닝**이라고 합니다. `__proto__`가 null이 될 때까지 프로토타입 체이닝이 일어납니다.
 
 ## 클래스
-앞에서 메모리 효율을 위해 메서드를 prototype에 정의해보았는데요. ES6에 추가된 클래스는 이것을 사용하기 쉽게 해줍니다. 
+
+앞에서 메모리 효율을 위해 메서드를 prototype에 정의해보았는데요. ES6에 추가된 클래스는 이것을 사용하기 쉽게 해줍니다.
+
 ```js
 class Person {
   constructor(name, age) {
@@ -147,19 +170,22 @@ class Person {
   }
 
   sayHi() {
-    console.log('HI');
+    console.log("HI");
   }
 }
 
-const person1 = new Person('heeji', 20);
-console.dir(person1)
+const person1 = new Person("heeji", 20);
+console.dir(person1);
 
-person1.sayHi()
+person1.sayHi();
 ```
-<img src={'/image/prototype-10.png'} />
-person1의 프로퍼티에 sayHi가 추가되는 것이 아니라 프로토타입에 sayHi가 정의되어있는 것을 확인할 수 있습니다.
+
+<img src={"/image/prototype-10.png"} />
+person1의 프로퍼티에 sayHi가 추가되는 것이 아니라 프로토타입에 sayHi가 정의되어있는
+것을 확인할 수 있습니다.
 
 참고자료
+
 - [mdn - Object prototypes](https://developer.mozilla.org/ko/docs/Learn/JavaScript/Objects/Object_prototypes)
 - [mdn - 상속과 프로토타입](https://developer.mozilla.org/ko/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)
 - https://www.howdy-mj.me/javascript/prototype-and-proto
