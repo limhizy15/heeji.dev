@@ -4,7 +4,7 @@ import styles from "./Nav.module.css";
 
 const navlinks: { title: string; link: string }[] = [
   { title: "posts", link: "/post" },
-  { title: "about", link: "/about" },
+  // { title: "about", link: "/about" },
 ];
 
 export default function Nav({ theme }: { theme: CookieValueTypes }) {
