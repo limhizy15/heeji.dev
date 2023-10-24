@@ -1,0 +1,202 @@
+---
+title: "SPA router 구현하기"
+date: "2023-10-23"
+description: "SPA에서 router를 구현하기 위해 필요한 WEB API 지식과 활용하는 법을 정리했다."
+tags: ['browser', 'javascript']
+---
+
+[SPA란?](https://heeji.dev/post/SPA%EB%9E%80%3F) 참고
+
+
+## 개요
+
+WEB API로 제공되는 `HashChangeEvent`, `History`를 활용해 브라우저 이동을 감지하거나 조작할 수 있다.
+
+### HashChangeEvent
+
+페이지 내 특정 위치로 스크롤할 때 사용되는 API이다. URL에 붙은 해시값(#)의 변경을 감지할 수 있다.
+
+예시)
+```jsx
+function locationHashChanged() {
+  if (location.hash === "#somecoolfeature") {
+    somecoolfeature();
+  }
+}
+
+window.addEventListener("hashchange", locationHashChanged);
+```
+
+### History
+
+브라우저의 세션 히스토리를 조작할 수 있게 해주는 API이다. 글로벌 객체인 `history`로 접근 가능하다.
+
+- `back`, `go` 메서드를 통해 브라우저를 이동시킬 수 있다. (히스토리 조작)
+- `pushState`로 title, data를 가지고 새로운 경로로 이동시킬 수 있다. (히스토리에 push하는 것이다)
+
+```jsx
+history.back()
+history.go(/)
+
+const state = { page_id: 1, user_id: 5 };
+const url = "hello-world.html";
+
+history.pushState(state, "", url);
+```
+
+- `popstate` 이벤트로 `pushState`나 `replaceState` 메서드가 호출되었는지를 감지할 수 있다. 브라우저 뒤로가기, 앞으로가기 발생시에 이벤트가 트리거되는 것이다.
+
+```jsx
+addEventListener("popstate", (event) => {
+  console.log("State received: ", event.state);
+});
+```
+
+## 설계
+
+SPA의 주요 특징은 경로가 변경 되었을 때 HTML을 서버로부터 새로 받아오는 것이 아니라 특정 영역만 갈아끼워 한 페이지 내에서 라우팅이 이루어지는 것이다.
+
+이를 위해서는 특정 경로로 진입 했을 때 해당 경로에 맞게 UI를 바꿔 끼워주면 된다.
+
+
+구현해야 할 것은
+
+- 경로와 UI 맵핑하기
+- 페이지 이동이 발생할 곳에 이벤트 걸기
+- 특정 경로에 맞는 UI를 그리기
+
+
+## 구현
+
+HTML 파일에 아래와 같이 간단하게 header를 추가해준다. `data property`를 활용해 라우팅이 발생할 때 조건을 걸어둔다.
+
+```jsx
+<header id="header">
+  <a href="/" data-spa-link>HOME</a>
+  <a href="/fnq" data-spa-link>FNQ</a>
+</header>
+
+<div id="root"></div>
+```
+
+router 클래스를 생성하고 설계 부분에서 정의한 것을 차례로 추가해보자
+
+### 1. 경로와 UI 맵핑
+
+path에 맞는 UI를 맵핑한 객체를 만들어주었다.
+
+class 생성자를 호출할 때 인자로 맵핑 데이터를 받아 변수에 할당하도록 했다.
+
+```jsx
+const routerMap: Record<string, string> = {
+  "/": <span>HOME</span>,
+  "/fnq": <span>FNQ</span>,
+};
+
+interface RouterProps {
+  routes: Record<string, string>;
+}
+
+class Router {
+  routes: Record<string, string>;
+
+  constructor({ routes }: RouterProps) {
+    this.routes = routes;
+  }
+}
+```
+
+### 2. 페이지 이동이 발생할 곳에 이벤트
+
+앞에서 header를 정의할 때 data-spa-link라는 data 속성을 정의했다.
+
+**bindEvent** 함수에서는 click 이벤트가 발생했을 때 data 속성을 확인하고 `data-spa-link`와 매치되면 history의 `pushState`를 호출해 히스토리를 push해준다.
+
+`load` 이벤트로 HTML이 불러와졌는지 확인하고 `popstate`로 뒤로가기, 앞으로가기를 감지한다. 현재는 콘솔로그를 찍어뒀는데 뒤에서 렌더링하는 코드를 추가할 것이다.
+
+```jsx
+class Router {
+  routes: Record<string, string>
+
+  constructor({ routes }: RouterProps) {
+    this.routes = routes
+		this.bindEvent() // 추가
+  }
+
+  bindEvent() {
+    document.body.addEventListener('click', (e) => {
+      const targetElement = e.target as HTMLElement
+
+      if (targetElement.matches('[data-spa-link]')) {
+        e.preventDefault()
+        const newURL = (targetElement as HTMLAnchorElement).href
+
+        history.pushState(null, '', newURL)
+				console.log('render')
+      }
+    })
+
+    window.addEventListener('load', () => console.log('render'))
+    window.addEventListener('popstate', () => console.log('render'))
+  }
+}
+```
+
+### 3. 특정 경로에 맞는 UI 그림
+
+이제 `renderPage` 메서드를 정의해보자
+
+이 함수는 현재 경로를 불러오고 라우터 맵핑 데이터에서 보여줄 UI를 찾아 root 요소에 갈아 끼워주는 함수이다.
+
+```jsx
+// ..
+
+class Router {
+  routes: Record<string, string>
+
+  // .. 중략
+
+	bindEvent() {
+    document.body.addEventListener('click', (e) => {
+      const targetElement = e.target as HTMLElement
+
+      if (targetElement.matches('[data-spa-link]')) {
+        e.preventDefault()
+        const newURL = (targetElement as HTMLAnchorElement).href
+
+        history.pushState(null, '', newURL)
+				this.renderPage() // 변경
+      }
+    })
+
+    window.addEventListener('load', () => this.renderPage())     // 변경
+    window.addEventListener('popstate', () => this.renderPage()) // 변경
+  }
+
+  renderPage() {
+    const path = window.location.pathname
+    const page = this.routes[path]
+
+    const $root = document.getElementById('root') as HTMLElement
+
+    if (page == null) {
+      $root.innerHTML = `<h1>404</h1>`
+    } else {
+      $root.innerHTML = page
+    }
+  }
+}
+```
+
+이렇게 Router 클래스를 정의했다. 인스턴스를 새로 생성하고 인자로 정의하고 싶은 라우터 맵핑 데이터를 넘겨주면 완성이다.
+
+```jsx
+new Router({ routes: routerMap });
+```
+
+
+## 참고자료
+
+- https://developer.mozilla.org/en-US/docs/Web/API/History
+- https://developer.mozilla.org/en-US/docs/Web/API/HashChangeEvent
+- https://kdydesign.github.io/2020/10/06/spa-route-tutorial/
