@@ -13,7 +13,6 @@ const siteMetadata = {
   mastodon: 'https://mastodon.social/@heeji',
   email: 'heeji289@gmail.com',
   github: 'https://github.com/limhizy15',
-  twitter: 'https://twitter.com/huge_0314',
   linkedin: 'https://www.linkedin.com/in/limhizy15',
   locale: 'ko-KR',
   analytics: {
