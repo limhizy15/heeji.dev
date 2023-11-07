@@ -1,0 +1,157 @@
+---
+title: '리액트의 Suspense를 활용해 선언적으로 UI를 작성해보자'
+date: '2023-11-07'
+description: 'Suspense가 무엇인지 알아보고 활용 예제를 작성했다.'
+tags: ['react']
+---
+
+# 리액트의 Suspense를 활용해 선언적으로 UI를 작성해보자
+
+React에서 데이터를 fetch하고 로딩중인지 에러가 발생했는지를 판별하고 그에 맞는 UI를 보여주는 작업은 자주 반복되는 일이다. 이번에 회사에서 React 18로 업그레이드 하면서 일부분에 이것을 선언적으로 작성할 수 있게 도와주는 Suspense를 도입했다.
+
+이 글에서는 Suspense가 무엇인지 알아보고 실제로 적용하는 예시를 보여주려고 한다.
+
+## Suspense란?
+
+React에서 제시한 동시성 컨셉과 관련된 것이다. Suspense는 비동기적으로 데이터를 불러오거나 컴포넌트를 dynamic import할 때 발생할 수 있는 지연 시간을 더 효과적으로 관리할 수 있도록 도와준다.
+
+Suspense를 활용하면 비동기 로직을 컴포넌트의 상위 수준에서 처리할 수 있어 복잡성을 줄이고 유지 보수가 용이해진다. 또 선언적으로 비동기 로직을 작성할 수 있다. “무엇”을 그린다에 더 집중할 수 있도록 해준다.
+
+### lazy import
+
+코드 스플리팅을 할 때 컴포넌트를 lazy import하고 이를 Suspense로 감싸 컴포넌트를 불러오는 동안 폴백을 노출하는데 사용된다.
+
+```jsx
+import React, { lazy, Suspense } from 'react'
+
+const LazyComponent = lazy(() => import('./LazyComponent'))
+
+function App() {
+  return (
+    <Suspense fallback={<div>로딩 중...</div>}>
+      <LazyComponent />
+    </Suspense>
+  )
+}
+
+export default App
+```
+
+### 비동기 로직
+
+비동기 로직을 수행 중이거나 실패가 발생했을 때 우리는 적절하게 UI를 노출시킨다. 일반적으로 아래와 같이 분기문을 통해 이를 수행한다.
+
+```jsx
+if (isLoading) {
+  return <div>Loading..</div>
+}
+
+if (isError) {
+  return <div>Error!</div>
+}
+```
+
+React Suspense를 활용하면 아래와 같이 대체할 수 있다. isError 구문은 ErrorBoundary를 사용해 폴백을 보여주도록 할 수 있다.
+
+```jsx
+<Suspense fallback={<Spinner />}>
+  <Comments />
+</Suspense>
+```
+
+## Suspense 활용 예제
+
+회사에서 요구사항에 브랜드 목록을 불러오고 이 브랜드에 등록된 상품 목록을 불러와서 보여주는 요구사항이 있었다. 이를 간소화한 버전이다.
+
+<img
+  src={
+    'https://github-production-user-asset-6210df.s3.amazonaws.com/41099712/280239657-8d5ed426-52cc-4fc8-b6cc-7a20c74c69a7.png'
+  }
+/>
+
+브랜드 목록을 불러오고 리스팅하는 UI를 작성하면 다음과 같다.
+
+```jsx
+export default function ReactSuspensePage() {
+  const { data } = useBrands()
+
+  return (
+    <StyledContainer>
+      {data?.map((brand) => (
+        <BrandSection key={brand.id} id={brand.id} />
+      ))}
+    </StyledContainer>
+  )
+}
+
+const StyledContainer = styled('section')`
+  display: flex;
+  flex-direction: column;
+`
+```
+
+BrandSection은 다음과 같이 작성할 수 있다. 브랜드 아이디로 등록된 상품을 불러오고 제목을 노출한다.
+
+```jsx
+function BrandSection({ id }: { id: string }) {
+  const { data } = useItemsByBrand({ brandID: id });
+
+  return (
+    <span>
+      <h1>{id}</h1>
+      {data?.map((item) => <span key={item.id}>{item.title}</span>)}
+    </span>
+  );
+}
+```
+
+데이터를 비동기로 불러오는 동안 Suspense로 fallback을 노출하도록 BrandSection을 Suspense로 감싸준다.
+
+```jsx
+export default function ReactSuspensePage() {
+  const { data } = useBrands();
+
+  return (
+    <StyledContainer>
+      {data?.map((brand) => (
+        <Suspense
+          key={brand.id}
+          fallback={
+            <StyledLoadingContainer>
+              <p>Loading🔜</p>
+            </StyledLoadingContainer>
+          }
+        >
+          <BrandSection id={brand.id} />
+        </Suspense>
+      ))}
+    </StyledContainer>
+  );
+}
+
+=-==
+
+const StyledContainer = styled("section")`
+  display: flex;
+  flex-direction: column;
+`;
+
+const StyledLoadingContainer = styled("div")`
+  min-height: "160px";
+`;
+```
+
+<img
+  src={
+    'https://github-production-user-asset-6210df.s3.amazonaws.com/41099712/280238828-f5edf4e5-9285-4f11-b2a2-13cdb9579047.gif'
+  }
+/>
+
+현재는 간단한 예제라 티가 잘 안나지만 boilerplate를 줄일 수 있고 선언형으로 작성하는데 이점을 얻을 수 있다.
+
+## 참고
+
+- [React Query와 함께 Concurrent UI Pattern을 도입하는 방법](https://tech.kakaopay.com/post/react-query-2/#%EB%B3%B5%EC%9E%A1%ED%95%9C-ui-%EA%B5%AC%EC%84%B1%EC%8B%9C-%EB%B9%9B%EC%9D%B4-%EB%82%98%EB%8A%94-%EC%84%A0%EC%96%B8%ED%98%95-%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8)
+- [TanStack Query - Suspensive React Query](https://tanstack.com/query/v4/docs/react/community/suspensive-react-query)
+- [Suspensive - Delay](https://suspensive.org/ko/docs/react/Delay)
+- [React Query useSuspenseQuery: Render Your Components Without Blocking the UI](https://medium.com/@bobjunior542/react-query-usesuspensequery-render-your-components-without-blocking-the-ui-e3c9d6d13c96)
